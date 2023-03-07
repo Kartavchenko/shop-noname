@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/App';
+import App from './App';
 import { Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux';
@@ -13,7 +13,7 @@ root.render(
   <Suspense>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <BrowserRouter basename='/store/'>
+        <BrowserRouter>
           <App />
         </BrowserRouter>
       </PersistGate>
