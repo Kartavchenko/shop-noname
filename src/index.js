@@ -13,7 +13,7 @@ root.render(
   <Suspense>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <BrowserRouter basename='/store/'>
+        <BrowserRouter basename='/shop-noname/'>
           <App />
         </BrowserRouter>
       </PersistGate>
