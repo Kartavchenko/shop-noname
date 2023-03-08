@@ -10,7 +10,7 @@ import {
 } from "firebase/auth";
 
 const auth = getAuth(firebaseConfig);
-const provider = new GoogleAuthProvider()
+const provider = new GoogleAuthProvider();
 
 export const loginWithGoogle= createAsyncThunk(
   "user/loginGoogle",

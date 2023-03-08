@@ -1,11 +1,16 @@
 import { useState } from "react";
 import { loginInAccount } from "../../redux/authOperations";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Input, BtnLogin, Form, BoxForm } from "./Login.styled";
+import { selectorIsLoggedInUser, selectorError } from "../../redux/selectors";
 
 const Login = () => {
   const [loginForm, setLoginForm] = useState(null);
+  const isLoggedIn = useSelector(selectorIsLoggedInUser);
+
+  const isError = useSelector(selectorError);
+
   const navigation = useNavigate();
 
   const dispatch = useDispatch();
@@ -14,8 +19,10 @@ const Login = () => {
     e.preventDefault();
     const form = e.target;
     dispatch(loginInAccount(loginForm));
-    form.reset();
-    navigation("/");
+    if (isLoggedIn) {
+      form.reset();
+      navigation("/");
+    }
   };
 
   return (
@@ -26,6 +33,8 @@ const Login = () => {
           id="email"
           label="Email"
           placeholder="Write email"
+          error={Boolean(isError)}
+          helperText={isError ? "wrong email or password" : false}
           onChange={(e) => {
             setLoginForm((prevState) => ({
               ...prevState,
@@ -38,6 +47,7 @@ const Login = () => {
           id="password"
           label="Password"
           placeholder="Write password"
+          error={Boolean(isError)}
           onChange={(e) => {
             setLoginForm((prevState) => ({
               ...prevState,

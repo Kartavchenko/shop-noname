@@ -5,3 +5,5 @@ export const selectorIsLoggedInUser = ({ user }) => user.isLoggedIn;
 export const selectorBasketItems = ({ user }) => user.basket;
 
 export const selectorIsLoading = ({ user }) => user.isLoading;
+
+export const selectorError = ({ user }) => user.error;

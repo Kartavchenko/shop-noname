@@ -6,6 +6,7 @@ export const BoxFooter = styled.footer`
 	align-items: center;
 	justify-content: center;
 	margin-top: 30px;
+ 
   height: 100px;
 	background-color: rgba(69, 82, 102, 0.5);
 `;

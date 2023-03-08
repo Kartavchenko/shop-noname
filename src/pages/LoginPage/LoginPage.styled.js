@@ -6,7 +6,7 @@ export const BoxLogin = styled(Box)`
   display: flex;
 	flex-direction: column;
 	align-items: center;
-  height: calc(100vh - 100px);
+  /* height: 100vh; */
   overflow: hidden;
 `;
 
