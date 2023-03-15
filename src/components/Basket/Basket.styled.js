@@ -39,15 +39,26 @@ export const IconRemoveFromBasket = styled(RemoveShoppingCartIcon)`
 `;
 
 export const UsersBasket = styled(Button)`
+
+@media screen and (min-width: 768px) {
+  margin-right: 10px;
+}
+
+@media screen and (min-width: 1200px) {
   margin-right: 20px;
+}  
+  
+  &:hover, :focus {
+    background-color: #4e4e4e;
+  } 
 `;
 
 export const ButtonBasket = styled(Button)`
-
+  
 `;
 
 export const IconBasket = styled(ShoppingCartIcon)`
-  
+  color: #ffffff;
 `;
 
 export const IconBackArrow = styled(WestIcon)`

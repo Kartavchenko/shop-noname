@@ -78,5 +78,35 @@ export const arrayDb = [
       "price": 1399.99,
       "description": "43-inch 1920х1080 Ultra HD AMOLED Smart TV",
       "image": require("./image/tv.jpg")
-    }
+  },
+    {
+      "id": 10,
+      "popular": 10,
+      "category": "laptop",
+      "name": "Acer Aspire 7",
+      "brand": "Acer",
+      "price": 799.99,
+      "description": "Acer Aspire 7 A715-42G-R3EZ (NH.QBFEU.00C) Charcoal Black / AMD Ryzen 5 5500U / RAM 16 ГБ / SSD 512 ГБ / nVidia GeForce GTX 1650",
+      "image": require("./image/laptop.jpg")
+  },
+    {
+      "id": 11,
+      "popular": 9,
+      "category": "laptop",
+      "name": "IdeaPad Gaming 3",
+      "brand": "Lenovo",
+      "price": 749.99,
+      "description": "Lenovo IdeaPad Gaming 3 15IAH7 (82S900UGRA) Onyx Grey / Intel Core i5-12450H / RAM 16 ГБ / SSD 1 ТБ / nVidia GeForce RTX 3050",
+      "image": require("./image/laptop.jpg")
+  },
+    {
+      "id": 12,
+      "popular": 9,
+      "category": "laptop",
+      "name": "MacBook Air 13.6' M2",
+      "brand": "Apple",
+      "price": 1799.99,
+      "description": "Apple MacBook Air 13.6' M2 256GB 2022 (MLY33UA/A) Midnight",
+      "image": require("./image/macbook.jpg")
+    },
   ]

@@ -40,12 +40,12 @@ const CatalogPage = () => {
     }
   };
 
-  const filteredList = [...data].sort((a, b) =>
-    filterList === "low-price"
-      ? a.price - b.price
-      : b.price - a.price && filterList === "last-popular"
-      ? a.popular - b.popular
-      : b.popular - a.popular
+  const filteredList = data.sort(
+    (a, b) =>
+      (filterList === "height-price" && b.price - a.price) ||
+      (filterList === "low-price" && a.price - b.price) ||
+      (filterList === "last-popular" && a.popular - b.popular) ||
+      (filterList === "first-popular" && b.popular - a.popular)
   );
 
   return (

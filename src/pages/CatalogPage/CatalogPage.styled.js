@@ -10,6 +10,7 @@ export const BoxFilterBtns = styled(Box)`
 export const BoxList = styled(Box)`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   margin-top: -20px;
   margin-left: -20px;
 `;

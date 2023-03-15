@@ -76,7 +76,7 @@ const Basket = () => {
 
   return (
     <div>
-      <UsersBasket variant="contained" onClick={handleClickOpen}>
+      <UsersBasket onClick={handleClickOpen}>
         {basketItems.length > 0 ? basketItems.length : null}
         <IconBasket />
       </UsersBasket>

@@ -29,7 +29,7 @@ Notiflix.Notify.init({
   fontAwesomeIconStyle: 'basic',
   fontAwesomeIconSize: '34px',
   success: {
-  background: '#32c682',
+  background: '#966dbf',
   textColor: '#fff',
   childClassName: 'notiflix-notify-success',
   notiflixIconColor: 'rgba(0,0,0,0.2)',

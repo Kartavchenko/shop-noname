@@ -1,4 +1,5 @@
 import Basket from "../Basket/Basket";
+import SearchBar from "../Search/Search";
 import {
   HeaderBox,
   LinkToLogin,
@@ -8,48 +9,39 @@ import {
   NavBar,
   LogoTitle,
   LogoTitleSub,
-  LogOutBtn,
-  LogOutIcon,
   BoxAuthBtn,
   BoxUser,
   Logo,
   User,
-  UserProfile,
+  UserBtnProfile,
   UserIcon,
+  LogoTitleMob,
+  LogoTitleSubMob,
 } from "./Header.styled";
-import { logOutAccount } from "../../redux/authOperations";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectorIsLoggedInUser,
-  selectorUserDate,
-} from "../../redux/selectors";
+import { useSelector } from "react-redux";
+import { selectorIsLoggedInUser } from "../../redux/selectors";
 
 const Header = () => {
-  const dispatch = useDispatch();
-
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
-  const userData = useSelector(selectorUserDate);
 
   return (
     <HeaderBox component="header">
       <Logo to="/">
+        <LogoTitleMob variant="h4">D</LogoTitleMob>
+        <LogoTitleSubMob variant="h4">S</LogoTitleSubMob>
         <LogoTitle variant="h4">Digital</LogoTitle>
         <LogoTitleSub variant="h4">Store</LogoTitleSub>
       </Logo>
       <NavBar component="nav">
+        <SearchBar />
         {isLoggedIn ? (
           <BoxUser>
             <User to="/profile">
-              <UserProfile>
+              <UserBtnProfile>
                 <UserIcon />
-                {userData.email}
-              </UserProfile>
+              </UserBtnProfile>
             </User>
             <Basket />
-            <LogOutBtn type="button" onClick={() => dispatch(logOutAccount())}>
-              LogOut
-              <LogOutIcon />
-            </LogOutBtn>
           </BoxUser>
         ) : (
           <BoxAuthBtn>
