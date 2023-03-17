@@ -1,7 +1,7 @@
-import { arrayDb } from "../../arrayDb";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToBasket } from "../../redux/userSlice";
+import { getData } from "../../redux/authOperations";
 import { BoxFilterBtns, BoxList } from "./CatalogPage.styled";
 import {
   selectorIsLoggedInUser,
@@ -20,9 +20,24 @@ const CatalogPage = () => {
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
   const basketItems = useSelector(selectorBasketItems);
 
+  // const getData = () =>
+  //   new Promise((resolve, reject) =>
+  //     setTimeout(() => {
+  //       resolve(arrayDb);
+  //       // reject(new Error("some problems with load data"));
+  //     }, 1000)
+  //   );
+
   useEffect(() => {
     (async () => {
-      await setData(arrayDb);
+      try {
+        const dataDB = await getData();
+        console.log(dataDB);
+        return setData(dataDB);
+      } catch (error) {
+        console.log(error);
+      } finally {
+      }
     })();
   }, []);
 

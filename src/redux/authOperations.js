@@ -8,9 +8,19 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
+import { arrayDb } from "../arrayDb";
+
 
 const auth = getAuth(firebaseConfig);
 const provider = new GoogleAuthProvider();
+
+export const getData = () =>
+    new Promise((resolve, reject) =>
+      setTimeout(() => {
+        resolve(arrayDb);
+        // reject(new Error("some problems with load data"));
+      }, 1000)
+    );
 
 export const loginWithGoogle= createAsyncThunk(
   "user/loginGoogle",
