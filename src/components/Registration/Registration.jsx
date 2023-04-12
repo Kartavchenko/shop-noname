@@ -25,7 +25,7 @@ const Registration = () => {
 
     if (isLoggedIn) {
       form.reset();
-      navigation("/");
+      navigation("/catalog");
     }
   };
 

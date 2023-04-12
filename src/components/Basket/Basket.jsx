@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Report } from "notiflix/build/notiflix-report-aio";
+import Notiflix from "../../helpers/notifications";
 import { Button, Slide } from "@mui/material";
 import { removeItemFromBasket, cleenBasket } from "../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,9 +37,15 @@ const Basket = () => {
   };
 
   const handleOrder = () => {
+    if (basketItems.length === 0)
+      return Notiflix.Report.failure(
+        "Order Failure",
+        "Please add product to basket.",
+        "Okay"
+      );
     handleClose();
     dispatch(cleenBasket());
-    Report.success(
+    Notiflix.Report.success(
       "Order Success",
       "Our consultant will contact you for confirm.",
       "Okay"

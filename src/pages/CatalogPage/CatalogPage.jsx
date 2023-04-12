@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Pagination } from "@mui/material";
 import { addItemToBasket } from "../../redux/userSlice";
 import { BoxFilterBtns, BoxList, BoxPagination } from "./CatalogPage.styled";
-import { getDataThunk, getSearchData } from "../../redux/dataOperations";
+import { getDataThunk } from "../../redux/dataOperations";
 import {
   selectorIsLoggedInUser,
   selectorBasketItems,
@@ -29,28 +29,14 @@ const CatalogPage = () => {
   useEffect(() => {
     (async () => {
       try {
-        const data = await getDataThunk(page);
+        const data = await getDataThunk(page, queryValue);
 
         setItems(data);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [page]);
-
-  useEffect(() => {
-    if (!queryValue) return;
-
-    (async () => {
-      try {
-        const data = await getSearchData(queryValue);
-
-        setItems(data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [queryValue]);
+  }, [page, queryValue]);
 
   const checkItemBasket = (id) => basketItems.find((item) => item.id === id);
 
@@ -100,6 +86,7 @@ const CatalogPage = () => {
       {items.length ? (
         <BoxPagination>
           <Pagination
+            disabled={items.length < 20}
             onChange={(evt, page) => paginationPages(evt, page)}
             count={14}
             variant="outlined"

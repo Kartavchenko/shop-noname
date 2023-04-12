@@ -4,14 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Input, BtnLogin, Form, BoxForm } from "./Login.styled";
 import { userIsLoggedIn } from "../../redux/userSlice";
 import { loginAccount } from "../../redux/authOperations";
-import { selectorIsLoggedInUser, selectorError } from "../../redux/selectors";
+import { selectorIsLoggedInUser } from "../../redux/selectors";
 
 const Login = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
-
-  const isError = useSelector(selectorError);
 
   const navigation = useNavigate();
 
@@ -26,7 +24,7 @@ const Login = () => {
 
     if (isLoggedIn) {
       form.reset();
-      navigation("/");
+      navigation("/catalog");
     }
   };
 
@@ -53,8 +51,6 @@ const Login = () => {
           label="Email"
           name="email"
           placeholder="Write email"
-          error={Boolean(isError)}
-          helperText={isError ? "wrong email or password" : false}
           onChange={handleChange}
         />
         <Input
@@ -63,7 +59,6 @@ const Login = () => {
           label="Password"
           name="password"
           placeholder="Write password"
-          error={Boolean(isError)}
           onChange={handleChange}
         />
         <BtnLogin type="submit" variant="contained">

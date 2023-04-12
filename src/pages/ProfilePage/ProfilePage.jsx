@@ -23,7 +23,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigation("/");
+      navigation("/catalog");
     }
   }, [navigation, isLoggedIn]);
 
@@ -35,7 +35,7 @@ const ProfilePage = () => {
     <Container>
       <h2>ProfilePage</h2>
       <UserNameText>{name ? name : email}</UserNameText>
-      <NavLink to="/">{"<-"}Go to store</NavLink>
+      <NavLink to="/catalog">{"<-"}Go to store</NavLink>
       <LogOutBtn type="button" onClick={logOutBtn}>
         LogOut
         <LogOutIcon />

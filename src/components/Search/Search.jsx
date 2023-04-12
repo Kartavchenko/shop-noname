@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { SearchField, BtnSearch } from "./Search.styled";
+import { SearchField } from "./Search.styled";
 
 const SearchBar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,13 +31,6 @@ const SearchBar = () => {
           startAdornment: (
             <InputAdornment position="start">
               <SearchIcon />
-            </InputAdornment>
-          ),
-          endAdornment: (
-            <InputAdornment position="end">
-              <BtnSearch type="submit" variant="string">
-                Find
-              </BtnSearch>
             </InputAdornment>
           ),
         }}

@@ -13,7 +13,8 @@ export const UserNameText = styled(Typography)`
 `;
 
 export const LogOutBtn = styled(Button)`
-  
+  margin-top: 20px;
+  width: 150px;
 `;
 
 export const LogOutIcon = styled(LogoutIcon)`

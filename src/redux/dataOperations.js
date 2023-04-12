@@ -7,9 +7,10 @@ export const getSearchData = async (search) => {
   }
 }
 
-export const getDataThunk = async (page) => {
+export const getDataThunk = async (page, search) => {
   try {
-    const fetchData = await fetch(`https://api.escuelajs.co/api/v1/products?offset=${page}&limit=20`);
+    const query = search ? `&title=${search}` : '';
+    const fetchData = await fetch(`https://api.escuelajs.co/api/v1/products?offset=${page}&limit=20${query}`);
     return await fetchData.json();
   } catch (error) {
     return error.message;

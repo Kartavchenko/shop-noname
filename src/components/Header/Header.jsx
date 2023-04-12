@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <HeaderBox component="header">
-      <Logo to="/">
+      <Logo to="/catalog">
         <LogoTitleMob variant="h4">D</LogoTitleMob>
         <LogoTitleSubMob variant="h4">S</LogoTitleSubMob>
         <LogoTitle variant="h4">Digital</LogoTitle>
