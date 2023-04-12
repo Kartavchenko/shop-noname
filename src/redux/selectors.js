@@ -1,9 +1,9 @@
-export const selectorUserDate = ({ user }) => user.user;
+export const selectorUserData = ({ data }) => data.user;
 
-export const selectorIsLoggedInUser = ({ user }) => user.isLoggedIn;
+export const selectorIsLoggedInUser = ({ data }) => data.isLoggedIn;
 
-export const selectorBasketItems = ({ user }) => user.basket;
+export const selectorBasketItems = ({ data }) => data.basket;
 
-export const selectorIsLoading = ({ user }) => user.isLoading;
+export const selectorIsLoading = ({ data }) => data.isLoading;
 
-export const selectorError = ({ user }) => user.error;
+export const selectorError = ({ data }) => data.error;

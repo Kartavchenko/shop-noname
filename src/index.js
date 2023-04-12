@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -10,13 +10,15 @@ import { store, persistor  } from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Suspense>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
-  </Suspense>
+  <StrictMode>
+    <Suspense>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </PersistGate>
+      </Provider>
+    </Suspense>
+  </StrictMode>
 );

@@ -12,10 +12,10 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />}>
-        <Route path="/" element={<CatalogPage />} />
-        <Route path="/profile" element={<ProfilePage/>} />
-        <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route index element={<CatalogPage />} />
+        <Route path="profile" element={<ProfilePage/>} />
+        <Route path="register" element={<RegistrationPage />} />
+        <Route path="login" element={<LoginPage />} />
       </Route>
         <Route path="*" element={<NotFound/>} />
     </Routes>

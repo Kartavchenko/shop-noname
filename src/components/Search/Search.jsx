@@ -1,28 +1,32 @@
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import Notiflix from "../../components/helpers/helpers";
 import { SearchField, BtnSearch } from "./Search.styled";
 
 const SearchBar = () => {
-  const [searchParams, setSearchParams] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const title = searchParams.get("title") ?? "";
 
-  const handleChange = (e) => {
-    setSearchParams(e.target.value.toLowerCase());
+  const handleQuery = (e) => {
+    const searchQuery = e.target.value;
+    if (searchQuery === "") {
+      return setSearchParams({});
+    }
+    setSearchParams({ title: searchQuery });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Notiflix.Notify.info(`you search ${searchParams}`);
-    console.log("searchParams", searchParams);
+    console.log(title);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form id="inputSearch" onSubmit={handleSubmit}>
       <SearchField
         size="small"
         placeholder="I'm Looking..."
-        onChange={handleChange}
+        value={title}
+        onChange={handleQuery}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

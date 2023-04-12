@@ -4,10 +4,9 @@ import { Button, Slide } from "@mui/material";
 import { removeItemFromBasket, cleenBasket } from "../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectorBasketItems } from "../../redux/selectors";
+import { ItemBasket } from "./ItemBasket/ItemBasket";
 import {
-  IconRemoveFromBasket,
   UsersBasket,
-  ButtonBasket,
   IconBasket,
   IconBackArrow,
   ModalBasket,
@@ -51,29 +50,6 @@ const Basket = () => {
     dispatch(removeItemFromBasket(id));
   };
 
-  const catalogBasket = basketItems.map(
-    ({ id, image, name, brand, price, description }) => {
-      return (
-        <li key={id}>
-          <ul>
-            <li>
-              <img src={image} alt="equipment" width="200" height="200" />
-            </li>
-            <li>{name}</li>
-            <li>{brand}</li>
-            <li>{price}</li>
-            <li>{description}</li>
-            <li>
-              <ButtonBasket type="button" onClick={() => removeFromBasket(id)}>
-                <IconRemoveFromBasket />
-              </ButtonBasket>
-            </li>
-          </ul>
-        </li>
-      );
-    }
-  );
-
   return (
     <div>
       <UsersBasket onClick={handleClickOpen}>
@@ -98,7 +74,10 @@ const Basket = () => {
         <ModalContainer>
           <ul>
             {basketItems.length >= 1 ? (
-              catalogBasket
+              <ItemBasket
+                basketItems={basketItems}
+                removeFromBasket={removeFromBasket}
+              />
             ) : (
               <EmphtyBasket variant="h5" align="center">
                 Nothing Aded <IconSadSmile />

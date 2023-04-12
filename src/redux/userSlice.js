@@ -1,16 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginInAccount, logOutAccount, createAccount, loginWithGoogle } from "./authOperations";
+import { logOutAccount } from "./authOperations";
 
 const userSlice = createSlice({
-  name: "user",
+  name: "data",
   initialState: {
-    user: null,
+    user: {uid: null, email: null, name: null},
     basket: [],
     isLoading: false,
     error: null,
     isLoggedIn: false,
   },
   reducers: {
+    userIsLoggedIn: (state, { payload }) => {
+      state.user = {
+        uid: payload.uid,
+        email: payload.email,
+        name: payload.displayName
+      };
+      state.isLoggedIn = true;
+    },
     removeItemFromBasket: (state, { payload }) => {
       state.basket = state.basket.filter(item => item.id !== payload);
     },
@@ -23,51 +31,11 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createAccount.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(createAccount.fulfilled, (state, { payload }) => {
-        state.user = payload.user;
-        state.token = payload.token;
-        state.isLoading = false;
-        state.isLoggedIn = true;
-        state.error = null;
-      })
-      .addCase(createAccount.rejected, (state, { payload }) => {
-        state.error = payload;
-        state.isLoading = false;
-      })
-      .addCase(loginWithGoogle.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(loginWithGoogle.fulfilled, (state, { payload }) => {
-        state.user = payload.user;
-        state.token = payload.token;
-        state.isLoading = false;
-        state.isLoggedIn = true;
-        state.error = null;
-      })
-      .addCase(loginWithGoogle.rejected, (state, { payload }) => {
-        state.error = payload;
-        state.isLoading = false;
-      })
-      .addCase(loginInAccount.fulfilled, (state, { payload }) => {
-        state.user = payload.user;
-        state.token = payload.token;
-        state.isLoading = false;
-        state.isLoggedIn = true;
-        state.error = null;
-      })
-      .addCase(loginInAccount.rejected, (state, { payload }) => {
-        state.error = payload;
-        state.isLoading = false;
-      })
       .addCase(logOutAccount.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(logOutAccount.fulfilled, (state) => {
-        state.user = null;
-        state.token = null;
+        state.user = {uid: null, email: null, name: null};
         state.basket = [];
         state.isLoggedIn = false;
         state.isLoading = false;
@@ -79,6 +47,6 @@ const userSlice = createSlice({
   }
 });
 
-export const {removeItemFromBasket, cleenBasket, addItemToBasket} = userSlice.actions;
+export const {removeItemFromBasket, cleenBasket, addItemToBasket, userIsLoggedIn} = userSlice.actions;
 
 export default userSlice.reducer;

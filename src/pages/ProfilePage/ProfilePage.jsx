@@ -1,31 +1,46 @@
-import { NavLink, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { selectorIsLoggedInUser } from "../../redux/selectors";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { logOutAccount } from "../../redux/authOperations";
-import { LogOutBtn, LogOutIcon } from "./ProfilePage.styled";
+import {
+  selectorIsLoggedInUser,
+  selectorUserData,
+} from "../../redux/selectors";
+import {
+  Container,
+  UserNameText,
+  LogOutBtn,
+  LogOutIcon,
+} from "./ProfilePage.styled";
 
 const ProfilePage = () => {
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
-  const dispatch = useDispatch();
+  const { name, email } = useSelector(selectorUserData);
 
-  const navigate = useNavigate();
+  const navigation = useNavigate();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate("/");
+      navigation("/");
     }
-  }, [navigate, isLoggedIn]);
+  }, [navigation, isLoggedIn]);
+
+  const logOutBtn = () => {
+    dispatch(logOutAccount());
+  };
 
   return (
-    <div>
+    <Container>
       <h2>ProfilePage</h2>
-      <NavLink to="/">Go to store</NavLink>
-      <LogOutBtn type="button" onClick={() => dispatch(logOutAccount())}>
+      <UserNameText>{name ? name : email}</UserNameText>
+      <NavLink to="/">{"<-"}Go to store</NavLink>
+      <LogOutBtn type="button" onClick={logOutBtn}>
         LogOut
         <LogOutIcon />
       </LogOutBtn>
-    </div>
+    </Container>
   );
 };
 

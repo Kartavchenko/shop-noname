@@ -29,15 +29,23 @@ export const ImageCard = styled.img`
   height: 200px;
 `;
 
+export const ImagePlug = styled.div`
+  width: 200px;
+  height: 200px;
+  background-color: #e1e1e1;
+`;
+
 export const ItemCardName = styled(Box)`
   display: flex;
   justify-content: center;
+  margin-bottom: 10px;
+
 `;
 
 export const ItemCardPopular = styled(Box)`
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 `;
 
 export const IconPopular = styled(StarIcon)`
@@ -47,7 +55,7 @@ export const IconPopular = styled(StarIcon)`
 
 export const ItemCardDescription = styled(Box)`
   display: flex;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   
 `;
 

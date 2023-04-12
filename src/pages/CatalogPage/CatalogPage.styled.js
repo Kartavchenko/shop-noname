@@ -14,3 +14,9 @@ export const BoxList = styled(Box)`
   margin-top: -20px;
   margin-left: -20px;
 `;
+
+export const BoxPagination = styled(Box)`
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+`;

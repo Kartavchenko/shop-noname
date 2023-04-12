@@ -33,7 +33,7 @@ export const arrayDb = [
       "id": 4,
       "popular": 9,
       "category": "tv",
-      "name": "Samsung XBR55X900H",
+      "name": "Samsung XBR55X600H",
       "brand": "Samsung",
       "price": 1399.99,
       "description": "60-inch 4K Ultra HD OLED Smart TV",

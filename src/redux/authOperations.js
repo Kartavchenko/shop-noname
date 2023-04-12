@@ -7,87 +7,64 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  onAuthStateChanged,
 } from "firebase/auth";
-import { arrayDb } from "../arrayDb";
-
 
 const auth = getAuth(firebaseConfig);
 const provider = new GoogleAuthProvider();
 
-export const getData = () =>
-    new Promise((resolve, reject) =>
-      setTimeout(() => {
-        resolve(arrayDb);
-        // reject(new Error("some problems with load data"));
-      }, 1000)
-    );
+export const loginWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
 
-export const loginWithGoogle= createAsyncThunk(
-  "user/loginGoogle",
-  async (_, thunkAPI) => {
-    try {
-      const result = await signInWithPopup(auth, provider);
+    await GoogleAuthProvider.credentialFromResult(result);
 
-      const credential = await GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-
-      const user = {
-       uid: result.user.uid,
-        email: result.user.email,
-      };
-
-      return { user: user, token: token };
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+    return result.user;
+  } catch (error) {
+    return error.message;
   }
-);
+}
 
-export const createAccount = createAsyncThunk(
-  "user/register",
-  async ({ email, password }, thunkAPI) => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+export const registerAccount = async (email, password) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-      const user = {
-        uid: userCredential.user.uid,
-        email: userCredential.user.email,
-        displayName: userCredential.user.displayName || "Buyer",
-      };
-
-      const token = await userCredential.user.getIdToken();
-      console.log({ user: user, token: token })
-      return { user: user, token: token };
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+    return userCredential.user;
+  } catch (error) {
+    return error.message;
   }
-);
+}
 
-export const loginInAccount = createAsyncThunk(
-  "user/login",
-  async ({ email, password }, thunkAPI) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-      const user = {
-        uid: userCredential.user.uid,
-        email: userCredential.user.email,
-      };
-
-      const token = await userCredential.user.getIdToken();
-      return { user: user, token: token };
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+export const loginAccount = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    
+    return userCredential.user;
+  } catch (error) {
+    return error.message;
   }
-);
+}
+
+export const getDataUser = async () => {
+  try {
+    await onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        return user;
+        } else {
+            // User is signed out
+            console.log("User is signed out")
+          }
+    });
+  } catch (error) {
+    return error.message;
+  }
+}
 
 export const logOutAccount = createAsyncThunk("user/logout",
   async (_, thunkAPI) => {
     try {
       await signOut(auth);
-      return {user: null, token: null, basket: []}
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

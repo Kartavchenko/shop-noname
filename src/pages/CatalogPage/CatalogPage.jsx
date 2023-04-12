@@ -1,80 +1,112 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Pagination } from "@mui/material";
 import { addItemToBasket } from "../../redux/userSlice";
-import { getData } from "../../redux/authOperations";
-import { BoxFilterBtns, BoxList } from "./CatalogPage.styled";
+import { BoxFilterBtns, BoxList, BoxPagination } from "./CatalogPage.styled";
+import { getDataThunk, getSearchData } from "../../redux/dataOperations";
 import {
   selectorIsLoggedInUser,
   selectorBasketItems,
 } from "../../redux/selectors";
-import Notiflix from "../../components/helpers/helpers";
-import FilterBtnsList from "../../components/FilterBtnsList/FilterBtbsList";
+import Notiflix from "../../helpers/notifications";
+// import FilterBtnsList from "../../components/FilterBtnsList/FilterBtnsList";
 import List from "../../components/List/List";
 
 const CatalogPage = () => {
-  const [data, setData] = useState([]);
-  const [filterList, setFilterList] = useState("first-popular");
+  // const [filterList, setFilterList] = useState("first-popular");
+  const [page, setPage] = useState(0);
+  const [items, setItems] = useState([]);
+
+  const [querySearch] = useSearchParams();
+  const queryValue = querySearch.get("title");
 
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
   const basketItems = useSelector(selectorBasketItems);
 
-  // const getData = () =>
-  //   new Promise((resolve, reject) =>
-  //     setTimeout(() => {
-  //       resolve(arrayDb);
-  //       // reject(new Error("some problems with load data"));
-  //     }, 1000)
-  //   );
-
   useEffect(() => {
     (async () => {
       try {
-        const dataDB = await getData();
-        console.log(dataDB);
-        return setData(dataDB);
+        const data = await getDataThunk(page);
+
+        setItems(data);
       } catch (error) {
         console.log(error);
-      } finally {
       }
     })();
-  }, []);
+  }, [page]);
+
+  useEffect(() => {
+    if (!queryValue) return;
+
+    (async () => {
+      try {
+        const data = await getSearchData(queryValue);
+
+        setItems(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [queryValue]);
+
+  const checkItemBasket = (id) => basketItems.find((item) => item.id === id);
+
+  const findItemId = (id) => items.find((item) => item.id === id);
 
   const addToBasket = (id) => {
     if (isLoggedIn) {
-      const itemID = data.find((item) => item.id === id);
-      const checkItemBasket = basketItems.find((item) => item.id === id);
-      if (checkItemBasket) {
+      const itemID = findItemId(id);
+
+      if (checkItemBasket(id)) {
         return Notiflix.Notify.info("Already added");
       }
+
       dispatch(addItemToBasket(itemID));
+
       Notiflix.Notify.success(`added ${itemID.name}`);
     } else {
       Notiflix.Notify.failure("please login in or register account");
     }
   };
 
-  const filteredList = data.sort(
-    (a, b) =>
-      (filterList === "height-price" && b.price - a.price) ||
-      (filterList === "low-price" && a.price - b.price) ||
-      (filterList === "last-popular" && a.popular - b.popular) ||
-      (filterList === "first-popular" && b.popular - a.popular)
-  );
+  const paginationPages = (evt, page) => {
+    const itemsPerPage = 20;
+    const start = (page - 1) * itemsPerPage;
+    setPage(start);
+  };
+
+  // const filteredList = [...items].sort(
+  //   (a, b) =>
+  //     (filterList === "height-price" && b.price - a.price) ||
+  //     (filterList === "low-price" && a.price - b.price) ||
+  //     (filterList === "last-popular" && a.popular - b.popular) ||
+  //     (filterList === "first-popular" && b.popular - a.popular)
+  // );
 
   return (
     <main>
       <BoxFilterBtns>
-        <FilterBtnsList
-          data={data}
+        {/* <FilterBtnsList
           filterPrise={filterList}
           setFilterList={setFilterList}
-        />
+        /> */}
       </BoxFilterBtns>
       <BoxList component="ul">
-        <List filteredList={filteredList} addToBasket={addToBasket} />
+        <List items={items} addToBasket={addToBasket} />
       </BoxList>
+      {items.length ? (
+        <BoxPagination>
+          <Pagination
+            onChange={(evt, page) => paginationPages(evt, page)}
+            count={14}
+            variant="outlined"
+            shape="rounded"
+          />
+        </BoxPagination>
+      ) : null}
     </main>
   );
 };

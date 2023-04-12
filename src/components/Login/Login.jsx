@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { loginInAccount } from "../../redux/authOperations";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Input, BtnLogin, Form, BoxForm } from "./Login.styled";
+import { userIsLoggedIn } from "../../redux/userSlice";
+import { loginAccount } from "../../redux/authOperations";
 import { selectorIsLoggedInUser, selectorError } from "../../redux/selectors";
 
 const Login = () => {
-  const [loginForm, setLoginForm] = useState(null);
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
 
   const isError = useSelector(selectorError);
@@ -18,10 +20,27 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
-    dispatch(loginInAccount(loginForm));
+    const userData = await loginAccount(userEmail, userPassword);
+
+    await dispatch(userIsLoggedIn(userData));
+
     if (isLoggedIn) {
       form.reset();
       navigation("/");
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case "email":
+        setUserEmail(value);
+        break;
+      case "password":
+        setUserPassword(value);
+        break;
+      default:
+        return;
     }
   };
 
@@ -32,28 +51,20 @@ const Login = () => {
           type="email"
           id="email"
           label="Email"
+          name="email"
           placeholder="Write email"
           error={Boolean(isError)}
           helperText={isError ? "wrong email or password" : false}
-          onChange={(e) => {
-            setLoginForm((prevState) => ({
-              ...prevState,
-              email: e.target.value,
-            }));
-          }}
+          onChange={handleChange}
         />
         <Input
           type="password"
           id="password"
           label="Password"
+          name="password"
           placeholder="Write password"
           error={Boolean(isError)}
-          onChange={(e) => {
-            setLoginForm((prevState) => ({
-              ...prevState,
-              password: e.target.value,
-            }));
-          }}
+          onChange={handleChange}
         />
         <BtnLogin type="submit" variant="contained">
           Login In
