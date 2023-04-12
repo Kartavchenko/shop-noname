@@ -6,7 +6,6 @@ import {
   ItemCardName,
   ItemCardImage,
   ImageCard,
-  IconPopular,
   ItemCardPopular,
   ItemCardDescription,
   ItemCardPrice,
