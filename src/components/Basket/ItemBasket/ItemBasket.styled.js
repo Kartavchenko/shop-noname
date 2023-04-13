@@ -10,5 +10,5 @@ export const ItemContainer = styled(Box)`
 `;
 
 export const Item = styled(Box)`
-  width: 200px;
+  width: 400px;
 `;

@@ -17,6 +17,7 @@ const CatalogPage = () => {
   // const [filterList, setFilterList] = useState("first-popular");
   const [page, setPage] = useState(0);
   const [items, setItems] = useState([]);
+  const [messageNoSearchResult, setMessageNoSearchResult] = useState("");
 
   const [querySearch] = useSearchParams();
   const queryValue = querySearch.get("title");
@@ -31,7 +32,15 @@ const CatalogPage = () => {
       try {
         const data = await getDataThunk(page, queryValue);
 
+        if (data.length === 0) {
+          setMessageNoSearchResult("Nothing found");
+        }
+
         setItems(data);
+
+        if (data.length > 0) {
+          setMessageNoSearchResult("");
+        }
       } catch (error) {
         console.log(error);
       }
@@ -52,7 +61,7 @@ const CatalogPage = () => {
 
       dispatch(addItemToBasket(itemID));
 
-      Notiflix.Notify.success(`added ${itemID.name}`);
+      Notiflix.Notify.success(`added ${itemID.title}`);
     } else {
       Notiflix.Notify.failure("please login in or register account");
     }
@@ -81,7 +90,11 @@ const CatalogPage = () => {
         /> */}
       </BoxFilterBtns>
       <BoxList component="ul">
-        <List items={items} addToBasket={addToBasket} />
+        {messageNoSearchResult ? (
+          <h2>{messageNoSearchResult}</h2>
+        ) : (
+          <List items={items} addToBasket={addToBasket} />
+        )}
       </BoxList>
       {items.length ? (
         <BoxPagination>

@@ -5,7 +5,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { BarsLoader } from "../../components/loaders/LoaderBars";
 
-const Home = () => {
+const HomePage = () => {
   return (
     <Container>
       <Header />
@@ -19,4 +19,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

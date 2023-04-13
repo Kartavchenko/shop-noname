@@ -15,27 +15,20 @@ const SearchBar = () => {
     setSearchParams({ title: searchQuery });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(title);
-  };
-
   return (
-    <form id="inputSearch" onSubmit={handleSubmit}>
-      <SearchField
-        size="small"
-        placeholder="I'm Looking..."
-        value={title}
-        onChange={handleQuery}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-    </form>
+    <SearchField
+      size="small"
+      placeholder="I'm Looking..."
+      value={title}
+      onChange={handleQuery}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon />
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 };
 
