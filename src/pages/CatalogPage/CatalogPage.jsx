@@ -4,18 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Pagination } from "@mui/material";
 import { addItemToBasket } from "../../redux/userSlice";
 import { BoxFilterBtns, BoxList, BoxPagination } from "./CatalogPage.styled";
-import { getDataThunk } from "../../redux/dataOperations";
+import { getDataThunk, getTotalPages } from "../../redux/dataOperations";
 import {
   selectorIsLoggedInUser,
   selectorBasketItems,
 } from "../../redux/selectors";
 import Notiflix from "../../helpers/notifications";
-// import FilterBtnsList from "../../components/FilterBtnsList/FilterBtnsList";
 import List from "../../components/List/List";
 
 const CatalogPage = () => {
-  // const [filterList, setFilterList] = useState("first-popular");
   const [page, setPage] = useState(0);
+  const [getValueTotalPages, setValueGetTotalPages] = useState(0);
   const [items, setItems] = useState([]);
   const [messageNoSearchResult, setMessageNoSearchResult] = useState("");
 
@@ -26,6 +25,18 @@ const CatalogPage = () => {
 
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
   const basketItems = useSelector(selectorBasketItems);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const totalPages = await getTotalPages();
+
+        await setValueGetTotalPages(totalPages);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -47,7 +58,8 @@ const CatalogPage = () => {
     })();
   }, [page, queryValue]);
 
-  const checkItemBasket = (id) => basketItems.find((item) => item.id === id);
+  const checkIdItemInBasket = (id) =>
+    basketItems.find((item) => item.id === id);
 
   const findItemId = (id) => items.find((item) => item.id === id);
 
@@ -55,7 +67,7 @@ const CatalogPage = () => {
     if (isLoggedIn) {
       const itemID = findItemId(id);
 
-      if (checkItemBasket(id)) {
+      if (checkIdItemInBasket(id)) {
         return Notiflix.Notify.info("Already added");
       }
 
@@ -73,22 +85,9 @@ const CatalogPage = () => {
     setPage(start);
   };
 
-  // const filteredList = [...items].sort(
-  //   (a, b) =>
-  //     (filterList === "height-price" && b.price - a.price) ||
-  //     (filterList === "low-price" && a.price - b.price) ||
-  //     (filterList === "last-popular" && a.popular - b.popular) ||
-  //     (filterList === "first-popular" && b.popular - a.popular)
-  // );
-
   return (
     <main>
-      <BoxFilterBtns>
-        {/* <FilterBtnsList
-          filterPrise={filterList}
-          setFilterList={setFilterList}
-        /> */}
-      </BoxFilterBtns>
+      <BoxFilterBtns></BoxFilterBtns>
       <BoxList component="ul">
         {messageNoSearchResult ? (
           <h2>{messageNoSearchResult}</h2>
@@ -99,9 +98,8 @@ const CatalogPage = () => {
       {items.length ? (
         <BoxPagination>
           <Pagination
-            disabled={items.length < 20}
             onChange={(evt, page) => paginationPages(evt, page)}
-            count={14}
+            count={getValueTotalPages}
             variant="outlined"
             shape="rounded"
           />

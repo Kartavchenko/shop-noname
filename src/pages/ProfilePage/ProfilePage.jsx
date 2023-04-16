@@ -1,21 +1,17 @@
 import { useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOutAccount } from "../../redux/authOperations";
 import {
   selectorIsLoggedInUser,
   selectorUserData,
 } from "../../redux/selectors";
-import {
-  Container,
-  UserNameText,
-  LogOutBtn,
-  LogOutIcon,
-} from "./ProfilePage.styled";
+import { Container, LogOutBtn, LogOutIcon } from "./ProfilePage.styled";
+import Profile from "../../components/Profile/Profile";
 
 const ProfilePage = () => {
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
-  const { name, email } = useSelector(selectorUserData);
+  const userName = useSelector(selectorUserData);
 
   const navigation = useNavigate();
 
@@ -33,9 +29,7 @@ const ProfilePage = () => {
 
   return (
     <Container>
-      <h2>ProfilePage</h2>
-      <UserNameText>{name ? name : email}</UserNameText>
-      <NavLink to="/">{"<-"}Go to catalog</NavLink>
+      <Profile userName={userName} />
       <LogOutBtn type="button" onClick={logOutBtn}>
         LogOut
         <LogOutIcon />

@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import firebaseConfig from "../firebase/config";
+import {auth } from "../firebase/config";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
@@ -10,7 +9,6 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-const auth = getAuth(firebaseConfig);
 const provider = new GoogleAuthProvider();
 
 export const loginWithGoogle = async () => {
