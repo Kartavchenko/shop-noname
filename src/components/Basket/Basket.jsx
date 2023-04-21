@@ -3,8 +3,10 @@ import Notiflix from "../../helpers/notifications";
 import { Button, Slide } from "@mui/material";
 import { removeItemFromBasket, cleenBasket } from "../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectorBasketItems } from "../../redux/selectors";
+import { selectorBasketItems, selectorUserData } from "../../redux/selectors";
 import { ItemBasket } from "./ItemBasket/ItemBasket";
+import { doc } from "firebase/firestore";
+import { fireDB } from "../../firebase/config";
 import {
   UsersBasket,
   IconBasket,
@@ -17,21 +19,31 @@ import {
   IconSadSmile,
   EmphtyBasket,
 } from "./Basket.styled";
+import { setDoc } from "firebase/firestore";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
 const Basket = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); // Modal state
+
+  const userID = useSelector(selectorUserData);
 
   const dispatch = useDispatch();
 
   const basketItems = useSelector(selectorBasketItems);
 
+  const addOrderToCollection = doc(fireDB, `${userID.uid}/${Date.now()}`); // Create document in firebase collection
+
+  const addToOrderHistory = (order) => {
+    setDoc(addOrderToCollection, { order, totalAmount }); // Add to firebase collection
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -43,6 +55,7 @@ const Basket = () => {
         "Please add product to basket.",
         "Okay"
       );
+    addToOrderHistory(basketItems);
     handleClose();
     dispatch(cleenBasket());
     Notiflix.Report.success(
@@ -51,6 +64,8 @@ const Basket = () => {
       "Okay"
     );
   };
+
+  const totalAmount = basketItems.reduce((acc, item) => acc + item.price, 0);
 
   const removeFromBasket = (id) => {
     dispatch(removeItemFromBasket(id));
@@ -92,7 +107,9 @@ const Basket = () => {
           </ul>
         </ModalContainer>
         <ModalOrder>
-          <Button onClick={handleOrder}>Order and pay</Button>
+          <Button variant="contained" onClick={handleOrder}>
+            Order and pay ${totalAmount}
+          </Button>
         </ModalOrder>
       </ModalBasket>
     </div>

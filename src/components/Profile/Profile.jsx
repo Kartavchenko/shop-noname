@@ -1,13 +1,16 @@
-import { NavLink } from "react-router-dom";
-import { UserNameText } from "./Profile.styled";
+import { useOutletContext } from "react-router";
+import { UserNameText, GoCatalogButton } from "./Profile.styled";
 
-const Profile = ({ userName }) => {
-  const { name, email } = userName;
+const Profile = () => {
+  const [userData] = useOutletContext();
+
+  const { name, email } = userData; // User data from firebase
+
   return (
     <div>
       <h1>Profile</h1>
       <UserNameText>{name ? name : email}</UserNameText>
-      <NavLink to="/">{"<-"}Go to catalog</NavLink>
+      <GoCatalogButton to="/">{"<-"}Go to catalog</GoCatalogButton>
     </div>
   );
 };

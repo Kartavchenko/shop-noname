@@ -41,7 +41,7 @@ const CatalogPage = () => {
   useEffect(() => {
     (async () => {
       try {
-        const data = await getDataThunk(page, queryValue);
+        const data = await getDataThunk(page, queryValue); // Get products from API
 
         if (data.length === 0) {
           setMessageNoSearchResult("Nothing found");
