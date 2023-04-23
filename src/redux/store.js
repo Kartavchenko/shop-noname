@@ -15,7 +15,6 @@ import userSlice from "./userSlice";
 const persistConfig = {
   key: "items",
   storage,
-  blacklist: ["isLoading"],
 };
 const persistedReducer = persistReducer(persistConfig, userSlice);
 export const store = configureStore({

@@ -6,24 +6,28 @@ export const OrderList = styled(Box)`
 	flex-direction: column;
 `;
 
-export const OrderItems = styled(Box)`
-  width: 220px;
+export const BoxOrderTitle = styled(Box)`
+  display: flex;
+`;
+
+export const OrderItem = styled(Box)`  
+  width: 100%;
   padding: 20px;
-  margin-right: 20px;
 	margin-bottom: 20px;
   background-color: #d4d4d4;
   border-radius: 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 
   &:last-child {
-    margin-right: 0;
 		margin-bottom: 0;
   }
 `;
 
-export const Order = styled(Box)`
+export const SubListOrder = styled(Box)`
   display: flex;
-  flex-direction: column;
+`;
+
+export const Order = styled(Box)` 
   width: 200px;
   padding: 5px;
   margin-bottom: 10px;
@@ -36,13 +40,5 @@ export const TitlesOrder = styled(Typography)`
 `;
 
 export const BoxOrders = styled(Box)`
-	position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%);
-  width: 260px;
-	background: white;
-  border: 2px solid #000;
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-	padding: 20px 20px 40px 20px;
+  padding: 20px;
 `;

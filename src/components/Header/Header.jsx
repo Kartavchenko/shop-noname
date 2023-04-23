@@ -36,7 +36,7 @@ const Header = () => {
         <SearchBar />
         {isLoggedIn ? (
           <BoxUser>
-            <User to="/profile">
+            <User to="/profile/orders">
               <UserBtnProfile>
                 <UserIcon />
               </UserBtnProfile>

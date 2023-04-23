@@ -34,10 +34,16 @@ const Basket = () => {
 
   const basketItems = useSelector(selectorBasketItems);
 
-  const addOrderToCollection = doc(fireDB, `${userID.uid}/${Date.now()}`); // Create document in firebase collection
-
-  const addToOrderHistory = (order) => {
-    setDoc(addOrderToCollection, { order, totalAmount }); // Add to firebase collection
+  const addToOrderHistory = async (order) => {
+    // Create document in firebase collection
+    try {
+      await setDoc(doc(fireDB, `${userID.uid}/${Date.now()}`), {
+        order,
+        totalAmount,
+      }); // Add to firebase collection
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
   };
 
   const handleClickOpen = () => {
@@ -48,16 +54,16 @@ const Basket = () => {
     setOpen(false);
   };
 
-  const handleOrder = () => {
+  const handleOrder = async () => {
     if (basketItems.length === 0)
       return Notiflix.Report.failure(
         "Order Failure",
         "Please add product to basket.",
         "Okay"
       );
-    addToOrderHistory(basketItems);
+    await addToOrderHistory(basketItems);
     handleClose();
-    dispatch(cleenBasket());
+    await dispatch(cleenBasket());
     Notiflix.Report.success(
       "Order Success",
       "Our consultant will contact you for confirm.",

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { logOutAccount } from "./authOperations";
+import { logOutAccount, changeNameAccount } from "./authOperations";
 
 const userSlice = createSlice({
   name: "data",
@@ -30,6 +30,9 @@ const userSlice = createSlice({
       .addCase(logOutAccount.fulfilled, (state) => {
         state.user = {uid: null, email: null, name: null};
         state.basket = [];
+      })
+      .addCase(changeNameAccount.fulfilled, (state, { payload }) => {
+        state.user.name = payload;
       })
   }
 });

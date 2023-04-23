@@ -7,8 +7,9 @@ const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 const CatalogPage = lazy(() => import("./pages/CatalogPage/CatalogPage"));
 const NotFound = lazy(() => import("./pages/NotFound/NotFoundPage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage/ProfilePage"));
-const HistoryOrdersModal = lazy(() => import("./components/HistoryOrdersModal/HistoryOrderModal"));
-const Profile = lazy(() => import("./components/Profile/Profile"))
+const HistoryOrders = lazy(() => import("./components/HistoryOrders/HistoryOrders"));
+const Profile = lazy(() => import("./components/Profile/Profile"));
+const WishList = lazy(() => import("./components/WishList/WishList"));
 
 function App() {
   return (
@@ -16,13 +17,14 @@ function App() {
       <Route path="/" element={<HomePage />}>
         <Route index element={<CatalogPage />} />
         <Route path="profile" element={<ProfilePage />} >
-          <Route path="user" element={ <Profile/>} />
-          <Route path="orders" element={<HistoryOrdersModal />} />
+          <Route index element={ <Profile/>} />
+          <Route path="orders" element={<HistoryOrders />} />
+          <Route path="wishlist" element={<WishList />} />
         </Route>
         <Route path="register" element={<RegistrationPage />} />
         <Route path="login" element={<LoginPage />} />
       </Route>
-        <Route path="*" element={<NotFound/>} />
+        <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

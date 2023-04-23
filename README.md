@@ -1,6 +1,6 @@
 # Pet project **Shop**
 
-Shop is a simple e-commerce web application that allows users to browse and purchase a range of products. This project is built using React.js and relies on a fake API for product data.
+Shop is a simple e-commerce web application that allows users to browse and purchase a range of products. This project is built using React.js and relies on a fake API for product data. Using Redux Toolkit for state management and Firebase for user authentication. For saving data in the database, I used Firebase.
 
 _The project is a work in progress and will be updated with additional features in the future._
 
@@ -12,6 +12,8 @@ _The project is a work in progress and will be updated with additional features 
 4. Search product by name.
 5. Add product to card.
 6. Remove product from card.
+7. History of orders. _(using firebase to save data)_
+8. Wish list. _(in progress)_
 
 ## Docs
 

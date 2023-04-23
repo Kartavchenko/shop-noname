@@ -1,17 +1,56 @@
-import { useOutletContext } from "react-router";
-import { UserNameText, GoCatalogButton } from "./Profile.styled";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { logOutAccount, changeNameAccount } from "../../redux/authOperations";
+import {
+  Container,
+  GoCatalogButton,
+  LogOutBtn,
+  LogOutIcon,
+} from "./Profile.styled";
 
 const Profile = () => {
-  const [userData] = useOutletContext();
+  const [userChangedName, setuserChangedName] = useState("");
 
-  const { name, email } = userData; // User data from firebase
+  const dispatch = useDispatch();
+
+  const logOutBtn = async () => {
+    await dispatch(logOutAccount());
+  };
+
+  const handleChangeName = (e) => {
+    setuserChangedName(e.target.value);
+  };
+
+  const updateName = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(changeNameAccount(userChangedName));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
-    <div>
-      <h1>Profile</h1>
-      <UserNameText>{name ? name : email}</UserNameText>
+    <Container>
+      <h2>Profile</h2>
       <GoCatalogButton to="/">{"<-"}Go to catalog</GoCatalogButton>
-    </div>
+      <form onSubmit={updateName}>
+        <label htmlFor="name">Name</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          value={userChangedName}
+          onChange={handleChangeName}
+        />
+        <button type="submit">Change Name</button>
+      </form>
+      <LogOutBtn type="button" onClick={logOutBtn}>
+        LogOut
+        <LogOutIcon />
+      </LogOutBtn>
+    </Container>
   );
 };
 
