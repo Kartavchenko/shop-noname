@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Input, BtnLogin, Form, BoxForm } from "./Login.styled";
-import { userIsLoggedIn } from "../../redux/userSlice";
 import { loginAccount } from "../../redux/authOperations";
 import { selectorIsLoggedInUser } from "../../redux/selectors";
 
@@ -15,12 +14,10 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-    const userData = await loginAccount(userEmail, userPassword);
-
-    await dispatch(userIsLoggedIn(userData));
+    dispatch(loginAccount(userEmail, userPassword));
 
     if (isLoggedIn) {
       form.reset();

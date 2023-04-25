@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { parseDate } from "../../helpers/parseDate";
 import {
+  ItemProduct,
+  ProductItem,
   OrderItem,
-  Order,
+  ProductList,
   TitlesOrder,
   OrderList,
   BoxOrders,
-  SubListOrder,
+  OrderListProducts,
   BoxOrderTitle,
 } from "./HistoryOrder.styled";
 
@@ -24,22 +26,22 @@ const HistoryOrders = () => {
   const orderDetails = (list) =>
     list.map(({ title, price, description }) => {
       return (
-        <li key={title}>
-          <Order component="ul">
-            <li>
+        <ItemProduct component="li" key={title}>
+          <ProductList component="ul">
+            <ProductItem component="li">
               <TitlesOrder>Product:</TitlesOrder>
               <p>{title}</p>
-            </li>
-            <li>
+            </ProductItem>
+            <ProductItem component="li">
               <TitlesOrder>Price:</TitlesOrder>
               <p>{price}</p>
-            </li>
-            <li>
+            </ProductItem>
+            <ProductItem component="li">
               <TitlesOrder>Description:</TitlesOrder>
               <p>{description}</p>
-            </li>
-          </Order>
-        </li>
+            </ProductItem>
+          </ProductList>
+        </ItemProduct>
       );
     });
 
@@ -55,7 +57,9 @@ const HistoryOrders = () => {
             <p>Total: ${totalAmount}</p>
           </li>
         </BoxOrderTitle>
-        <SubListOrder component="ul">{orderDetails(order)}</SubListOrder>
+        <OrderListProducts component="ul">
+          {orderDetails(order)}
+        </OrderListProducts>
       </OrderItem>
     )
   );

@@ -37,7 +37,7 @@ const Basket = () => {
   const addToOrderHistory = async (order) => {
     // Create document in firebase collection
     try {
-      await setDoc(doc(fireDB, `${userID.uid}/${Date.now()}`), {
+      await setDoc(doc(fireDB, `${userID.email}/${Date.now()}`), {
         order,
         totalAmount,
       }); // Add to firebase collection

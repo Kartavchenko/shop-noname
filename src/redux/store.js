@@ -16,6 +16,7 @@ const persistConfig = {
   key: "items",
   storage,
 };
+
 const persistedReducer = persistReducer(persistConfig, userSlice);
 export const store = configureStore({
   reducer: {

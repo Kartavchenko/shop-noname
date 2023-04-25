@@ -2,7 +2,7 @@ import { useState, useEffect, Suspense } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { onSnapshot } from "firebase/firestore";
 import { collectionGroup } from "firebase/firestore";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   selectorIsLoggedInUser,
   selectorUserData,
@@ -10,6 +10,7 @@ import {
 import { fireDB } from "../../firebase/config";
 import { Container } from "./ProfilePage.styled";
 import ListNavProfile from "../../components/ListNavProfile/ListNavProfile";
+import { getDataUser } from "../../redux/authOperations";
 
 const ProfilePage = () => {
   const [historyOrders, setHistoryOrders] = useState([]);
@@ -18,6 +19,12 @@ const ProfilePage = () => {
   const userData = useSelector(selectorUserData);
 
   const navigation = useNavigate();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    (async () => await dispatch(getDataUser()))();
+  }, [dispatch]);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -31,7 +38,7 @@ const ProfilePage = () => {
     (async () => {
       try {
         await onSnapshot(
-          collectionGroup(fireDB, `${userData.uid}`), // Get history list collection from firebase
+          collectionGroup(fireDB, `${userData.email}`), // Get history list collection from firebase
           (snapshot) => {
             const order = snapshot.docChanges().map((change) => ({
               id: change.doc.id,
@@ -45,7 +52,7 @@ const ProfilePage = () => {
         console.error("Error getting users:", error);
       }
     })();
-  }, [userData.uid]);
+  }, [userData.uid, userData.email]);
 
   return (
     <Container>

@@ -6,6 +6,10 @@ import {
   GoCatalogButton,
   LogOutBtn,
   LogOutIcon,
+  InputName,
+  Form,
+  BtnChangeName,
+  BoxTitleLogout,
 } from "./Profile.styled";
 
 const Profile = () => {
@@ -32,24 +36,28 @@ const Profile = () => {
 
   return (
     <Container>
-      <h2>Profile</h2>
-      <GoCatalogButton to="/">{"<-"}Go to catalog</GoCatalogButton>
-      <form onSubmit={updateName}>
-        <label htmlFor="name">Name</label>
-        <input
+      <BoxTitleLogout>
+        <h2>Profile</h2>
+        <LogOutBtn type="button" onClick={logOutBtn}>
+          LogOut
+          <LogOutIcon />
+        </LogOutBtn>
+      </BoxTitleLogout>
+      <Form onSubmit={updateName}>
+        <InputName
           id="name"
+          label="Name"
           name="name"
           type="text"
           required
           value={userChangedName}
           onChange={handleChangeName}
         />
-        <button type="submit">Change Name</button>
-      </form>
-      <LogOutBtn type="button" onClick={logOutBtn}>
-        LogOut
-        <LogOutIcon />
-      </LogOutBtn>
+        <BtnChangeName type="submit" variant="contained">
+          Change Name
+        </BtnChangeName>
+      </Form>
+      <GoCatalogButton to="/">{"<-"}Go to catalog</GoCatalogButton>
     </Container>
   );
 };
