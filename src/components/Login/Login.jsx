@@ -1,62 +1,46 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { useDispatch } from "react-redux";
 import { Input, BtnLogin, Form, BoxForm } from "./Login.styled";
 import { loginAccount } from "../../redux/authOperations";
-import { selectorIsLoggedInUser } from "../../redux/selectors";
+import { schema } from "../../schemas/AuthSchema";
 
 const Login = () => {
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const isLoggedIn = useSelector(selectorIsLoggedInUser);
-
-  const navigation = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: { email: "", password: "" },
+    resolver: joiResolver(schema),
+  });
 
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    dispatch(loginAccount(userEmail, userPassword));
-
-    if (isLoggedIn) {
-      form.reset();
-      navigation("/catalog");
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    switch (name) {
-      case "email":
-        setUserEmail(value);
-        break;
-      case "password":
-        setUserPassword(value);
-        break;
-      default:
-        return;
-    }
+  const onSubmit = (value) => {
+    dispatch(loginAccount(value.email, value.password));
   };
 
   return (
     <BoxForm>
-      <Form component="form" onSubmit={handleSubmit}>
+      <Form component="form" onSubmit={handleSubmit(onSubmit)}>
         <Input
           type="email"
           id="email"
           label="Email"
-          name="email"
           placeholder="Write email"
-          onChange={handleChange}
+          error={Boolean(errors.email)}
+          helperText={errors.email?.message}
+          {...register("email")}
         />
         <Input
           type="password"
           id="password"
           label="Password"
-          name="password"
           placeholder="Write password"
-          onChange={handleChange}
+          error={Boolean(errors.password)}
+          helperText={errors.password?.message}
+          {...register("password")}
         />
         <BtnLogin type="submit" variant="contained">
           Login In

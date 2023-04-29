@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Button, Box, TextField } from "@mui/material";
 import { NavLink } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
+import CheckIcon from '@mui/icons-material/Check';
 
 export const Container = styled(Box)`
   padding: 20px;
@@ -32,7 +33,11 @@ export const Form = styled.form`
 `;
 
 export const BtnChangeName = styled(Button)`
+  width: 150px;
+`;
 
+export const CheckIconStyled = styled(CheckIcon)`
+  transition: 500ms cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
 export const BoxTitleLogout = styled(Box)`

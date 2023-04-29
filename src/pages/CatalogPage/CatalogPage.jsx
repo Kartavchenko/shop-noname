@@ -73,9 +73,9 @@ const CatalogPage = () => {
 
       dispatch(addItemToBasket(itemID));
 
-      Notiflix.Notify.success(`added ${itemID.title}`);
+      Notiflix.Notify.success(`Added ${itemID.title}`);
     } else {
-      Notiflix.Notify.failure("please login in or register account");
+      Notiflix.Notify.failure("Please login in or register account");
     }
   };
 

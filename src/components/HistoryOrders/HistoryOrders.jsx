@@ -22,7 +22,7 @@ const HistoryOrders = () => {
     setOrderListHistory(historyOrders);
   }, [historyOrders]);
 
-  // products list of order
+  // order products list
   const orderDetails = (list) =>
     list.map(({ title, price, description }) => {
       return (
@@ -45,7 +45,7 @@ const HistoryOrders = () => {
       );
     });
 
-  // user order
+  // order user
   const orderItemWithDetails = orderListHistory.map(
     ({ id, order, totalAmount }) => (
       <OrderItem component="li" key={id}>

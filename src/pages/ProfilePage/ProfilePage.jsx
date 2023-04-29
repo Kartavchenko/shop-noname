@@ -16,7 +16,7 @@ const ProfilePage = () => {
   const [historyOrders, setHistoryOrders] = useState([]);
 
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
-  const userData = useSelector(selectorUserData);
+  const { name, email, uid } = useSelector(selectorUserData);
 
   const navigation = useNavigate();
 
@@ -33,12 +33,12 @@ const ProfilePage = () => {
   }, [navigation, isLoggedIn]);
 
   useEffect(() => {
-    if (!userData.uid) return;
+    if (!uid) return;
 
     (async () => {
       try {
         await onSnapshot(
-          collectionGroup(fireDB, `${userData.email}`), // Get history list collection from firebase
+          collectionGroup(fireDB, `${email}`), // Get history list collection from firebase
           (snapshot) => {
             const order = snapshot.docChanges().map((change) => ({
               id: change.doc.id,
@@ -52,11 +52,11 @@ const ProfilePage = () => {
         console.error("Error getting users:", error);
       }
     })();
-  }, [userData.uid, userData.email]);
+  }, [uid, email]);
 
   return (
     <Container>
-      <ListNavProfile userData={userData} />
+      <ListNavProfile userData={{ name, email }} />
       <Suspense>
         <Outlet context={[historyOrders]} />
       </Suspense>

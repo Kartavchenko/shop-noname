@@ -6,6 +6,11 @@ export const Container = styled(Box)`
   width: 300px;
   height: 100vh;
   border-right: 1px solid #e0e0e0;
+  
+
+  @media screen and (max-width: 768px) {
+
+  }
 `;
 
 export const BoxNav = styled(Box)`

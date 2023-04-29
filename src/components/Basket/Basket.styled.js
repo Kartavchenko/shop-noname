@@ -10,7 +10,6 @@ export const ModalBasket = styled(Dialog)`
 `;
 
 export const EmphtyBasket = styled(Typography)`
-  
 `;
 
 export const IconSadSmile = styled(SentimentVeryDissatisfiedIcon)`

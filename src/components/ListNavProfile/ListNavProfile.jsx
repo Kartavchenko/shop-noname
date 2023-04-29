@@ -1,7 +1,17 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { BoxNav, NavUser, Container } from "./ListNavProfile.styled";
+import { getDataUser } from "../../redux/authOperations";
 
 const ListNavProfile = ({ userData }) => {
   const { name, email } = userData;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    (async () => await dispatch(getDataUser()))();
+  }, [dispatch]);
+
   return (
     <Container>
       <BoxNav>

@@ -62,7 +62,9 @@ const Basket = () => {
         "Okay"
       );
     await addToOrderHistory(basketItems);
+
     handleClose();
+
     await dispatch(cleenBasket());
     Notiflix.Report.success(
       "Order Success",

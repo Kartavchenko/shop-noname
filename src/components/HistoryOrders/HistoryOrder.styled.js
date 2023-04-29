@@ -27,15 +27,14 @@ export const OrderItem = styled(Box)`
 export const OrderListProducts = styled(Box)`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 export const ItemProduct = styled(Box)`
-  margin-right: 10px;
   border-bottom: 1px solid black;
   
   &:last-child {
     border-bottom: none;
-    margin-right: 0;
   }
 `;
 
@@ -45,6 +44,9 @@ export const ProductItem = styled(Box)`
   width: 200px;
   margin-right: 30px;
 
+  &:last-child {
+    margin-right: 0;
+  }
 `;
 
 export const ProductList = styled(Box)` 
@@ -53,8 +55,12 @@ export const ProductList = styled(Box)`
   width: 200px;
   padding: 5px;
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 768px) {
     flex-direction: row;
+    width: 300px;
+  }
+
+  @media screen and (min-width: 1024px) {
     width: 100%;
   }
 `;

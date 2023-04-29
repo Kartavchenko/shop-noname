@@ -10,28 +10,35 @@ import {
   Form,
   BtnChangeName,
   BoxTitleLogout,
+  CheckIconStyled,
 } from "./Profile.styled";
 
 const Profile = () => {
   const [userChangedName, setuserChangedName] = useState("");
+  const [changeMarkName, setChangeMarkName] = useState(false);
 
   const dispatch = useDispatch();
 
-  const logOutBtn = async () => {
-    await dispatch(logOutAccount());
+  const logOutBtn = () => {
+    dispatch(logOutAccount());
   };
 
   const handleChangeName = (e) => {
     setuserChangedName(e.target.value);
   };
 
-  const updateName = async (e) => {
+  const updateName = (e) => {
     e.preventDefault();
-    try {
-      await dispatch(changeNameAccount(userChangedName));
-    } catch (error) {
-      console.error(error);
-    }
+    dispatch(changeNameAccount(userChangedName));
+    setuserChangedName("");
+    setChangeMarkName(true);
+    checkIconTimeout();
+  };
+
+  const checkIconTimeout = () => {
+    setTimeout(() => {
+      setChangeMarkName(false);
+    }, 3000);
   };
 
   return (
@@ -54,7 +61,7 @@ const Profile = () => {
           onChange={handleChangeName}
         />
         <BtnChangeName type="submit" variant="contained">
-          Change Name
+          {changeMarkName ? <CheckIconStyled /> : "Change Name"}
         </BtnChangeName>
       </Form>
       <GoCatalogButton to="/">{"<-"}Go to catalog</GoCatalogButton>

@@ -9,6 +9,7 @@ const SearchBar = () => {
 
   const handleQuery = (e) => {
     const searchQuery = e.target.value;
+
     if (searchQuery === "") {
       return setSearchParams({});
     }
