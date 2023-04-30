@@ -48,7 +48,7 @@ export const UsersBasket = styled(Button)`
 }  
   
   &:hover, :focus {
-    background-color: #4e4e4e;
+    background-color: #4C4556;
   } 
 `;
 

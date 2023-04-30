@@ -15,7 +15,7 @@ const ListNavProfile = ({ userData }) => {
   return (
     <Container>
       <BoxNav>
-        <NavUser to="/profile">
+        <NavUser to="user">
           {name ? name : "User"} {email}
         </NavUser>
       </BoxNav>

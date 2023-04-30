@@ -7,7 +7,7 @@ _The project is a work in progress and will be updated with additional features 
 **Features:**
 
 1. Logining and registration user account with Firebase.
-2. User page.
+2. User page with the possibility of editing the profile.
 3. Product page with pagination.
 4. Search product by name.
 5. Add product to card.
@@ -24,6 +24,7 @@ _The project is a work in progress and will be updated with additional features 
 - Used API [Platzi Fake Store API](https://fakeapi.platzi.com/).
 - For managing state used [Redux Toolkit](https://redux-toolkit.js.org/).
 - For routing used [React Router](https://reactrouter.com/).
+- Used [React Hook Form](https://react-hook-form.com/) for forms.
 - Used [Firebase](https://firebase.google.com/) for user authentication.
 - [Material-UI](https://v4.mui.com/) for styling the UI.
 - For notifications used [Notiflix](https://notiflix.github.io/).

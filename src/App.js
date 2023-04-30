@@ -17,7 +17,7 @@ function App() {
       <Route path="/" element={<HomePage />}>
         <Route index element={<CatalogPage />} />
         <Route path="profile" element={<ProfilePage />} >
-          <Route index element={ <Profile/>} />
+          <Route path="user" element={ <Profile/>} />
           <Route path="orders" element={<HistoryOrders />} />
           <Route path="wishlist" element={<WishList />} />
         </Route>

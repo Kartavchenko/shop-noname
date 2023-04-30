@@ -56,11 +56,15 @@ const Profile = () => {
           label="Name"
           name="name"
           type="text"
-          required
+          size="small"
           value={userChangedName}
           onChange={handleChangeName}
         />
-        <BtnChangeName type="submit" variant="contained">
+        <BtnChangeName
+          type="submit"
+          disabled={!userChangedName}
+          variant="contained"
+        >
           {changeMarkName ? <CheckIconStyled /> : "Change Name"}
         </BtnChangeName>
       </Form>

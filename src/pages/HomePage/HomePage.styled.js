@@ -8,5 +8,6 @@ export const Container = styled(Box)`
 `;
 
 export const BoxContent = styled(Box)`
+  background-color: #433E49;
   flex: 1;
 `;

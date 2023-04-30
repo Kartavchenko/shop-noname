@@ -27,12 +27,18 @@ export const NavUser = styled(NavLink)`
   padding: 20px;
   border-radius: 8px;
   font-weight: 500;
-  color: #000000;
+  color: #fff;
+  background-color: transparent;
   
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  background-color: ${props => props.active ? "#f5f5f5" : "transparent" };
   
-  &:hover, &:focus {
-    background-color: #f5f5f5;
-  }
+  &.active {
+      background-color: #f5f5f5;
+      color: #000000;
+    }
+  
+    &:hover, :focus {
+      background-color: #f5f5f5;
+      color: #000000;      
+    }
 `;

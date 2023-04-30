@@ -6,7 +6,7 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 export const HeaderBox = styled(Box)`
   padding: 0 10px 0 10px;
   display: flex;
-  background-color: #332c2c;
+  background-color: #433E49;
   height: 60px;
   align-items: center;
   justify-content: center;
@@ -41,7 +41,7 @@ export const UserIcon = styled(PersonOutlineIcon)`
 `;
 
 export const User = styled(NavLink)`
-
+  
 `;
 
 export const UserBtnProfile = styled(Button)`
@@ -56,7 +56,8 @@ export const UserBtnProfile = styled(Button)`
   }
 
   &:hover, :focus {
-    background-color: #4e4e4e;
+    background-color: #4C4556;
+    
   } 
 `;
 

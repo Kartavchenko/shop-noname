@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Pagination } from "@mui/material";
 import { addItemToBasket } from "../../redux/userSlice";
-import { BoxFilterBtns, BoxList, BoxPagination } from "./CatalogPage.styled";
+import { Main, BoxList, BoxPagination } from "./CatalogPage.styled";
 import { getDataThunk, getTotalPages } from "../../redux/dataOperations";
 import {
   selectorIsLoggedInUser,
@@ -25,6 +25,8 @@ const CatalogPage = () => {
 
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
   const basketItems = useSelector(selectorBasketItems);
+
+  const checkItemsInItems = basketItems.map((item) => item.id);
 
   useEffect(() => {
     (async () => {
@@ -81,18 +83,22 @@ const CatalogPage = () => {
 
   const paginationPages = (evt, page) => {
     const itemsPerPage = 20;
-    const start = (page - 1) * itemsPerPage;
-    setPage(start);
+    const current = (page - 1) * itemsPerPage;
+    setPage(current);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <main>
-      <BoxFilterBtns></BoxFilterBtns>
+    <Main>
       <BoxList component="ul">
         {messageNoSearchResult ? (
           <h2>{messageNoSearchResult}</h2>
         ) : (
-          <List items={items} addToBasket={addToBasket} />
+          <List
+            items={items}
+            checkItemsInItems={checkItemsInItems}
+            addToBasket={addToBasket}
+          />
         )}
       </BoxList>
       {items.length ? (
@@ -101,11 +107,12 @@ const CatalogPage = () => {
             onChange={(evt, page) => paginationPages(evt, page)}
             count={getValueTotalPages}
             variant="outlined"
+            color="primary"
             shape="rounded"
           />
         </BoxPagination>
       ) : null}
-    </main>
+    </Main>
   );
 };
 

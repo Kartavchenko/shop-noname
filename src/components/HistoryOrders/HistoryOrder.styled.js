@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 
 export const OrderList = styled(Box)`
   display: flex;
@@ -15,12 +15,23 @@ export const OrderItem = styled(Box)`
   width: 100%;
   padding: 20px;
 	margin-bottom: 20px;
-  background-color: rgba(255, 234, 0, 0.1);
+  background-color: #F6C026;
   border-radius: 10px;
-  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px 8px rgba(0, 0, 0, 0.1);
 
   &:last-child {
 		margin-bottom: 0;
+  }
+
+  animation: item 600 ;
+
+  @keyframes item {
+    from {
+      transform: transformY(100px);
+    }
+    to {
+      transform: transformY(0);
+    }
   }
 `;
 
@@ -41,7 +52,7 @@ export const ItemProduct = styled(Box)`
 export const ProductItem = styled(Box)`
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 300px;
   margin-right: 30px;
 
   &:last-child {
@@ -53,7 +64,7 @@ export const ProductList = styled(Box)`
   display: flex;
   flex-direction: column;
   width: 200px;
-  padding: 5px;
+  margin: 10px;
 
   @media screen and (min-width: 768px) {
     flex-direction: row;
@@ -71,4 +82,18 @@ export const TitlesOrder = styled(Typography)`
 
 export const BoxOrders = styled(Box)`
   padding: 20px;
+`;
+
+export const BoxBtnLoadMore = styled(Box)`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+`;
+
+export const ButtonLoadMore = styled(Button)`
+  background-color: #4C4556; 
+  
+  &:hover, :focus {
+    background-color: #F6C026;
+  }
 `;
