@@ -15,7 +15,7 @@ export const OrderItem = styled(Box)`
   width: 100%;
   padding: 20px;
 	margin-bottom: 20px;
-  background-color: #F6C026;
+  background-color: #333D51;
   border-radius: 10px;
   box-shadow: 0 0 10px 8px rgba(0, 0, 0, 0.1);
 
@@ -78,6 +78,11 @@ export const ProductList = styled(Box)`
 
 export const TitlesOrder = styled(Typography)`
   font-weight: 600;
+  color: #CBD0D8;
+`;
+
+export const Text = styled.p`
+  color: #CBD0D8;
 `;
 
 export const BoxOrders = styled(Box)`
@@ -91,7 +96,7 @@ export const BoxBtnLoadMore = styled(Box)`
 `;
 
 export const ButtonLoadMore = styled(Button)`
-  background-color: #4C4556; 
+  background-color: rgba(246, 192, 38, 0.8); 
   
   &:hover, :focus {
     background-color: #F6C026;

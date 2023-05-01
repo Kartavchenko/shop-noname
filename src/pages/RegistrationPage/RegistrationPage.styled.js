@@ -11,6 +11,7 @@ export const BoxRegister = styled(Box)`
 export const TitleForm = styled(Typography)`
   margin-top: 50px;
 	margin-bottom: 50px;
+	color: #CBD0D8;
 `;
 
 export const Link = styled(NavLink)`

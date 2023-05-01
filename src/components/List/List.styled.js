@@ -8,17 +8,6 @@ export const Card = styled(Box)`
   margin-top: 20px;
 
   position: relative;
-
-  animation: card 500ms ease-in-out;
-
-  @keyframes card {
-    from {
-      transform: scale(0.7);
-    }
-    to {
-      transform: scale(1);
-    }
-  }
 `;
 
 export const ItemsList = styled(Box)`
@@ -32,26 +21,6 @@ export const ItemsList = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  .show-description {
-    opacity: 0;
-  }
-  /* при наведенні на опис показувати додаткові данні, 
-  не на картинку  */
-  &:hover .show-description {
-    opacity: 1;
-    animation: show 500ms ease-in-out;
-    
-    @keyframes show {
-      from {
-        transform: translateY(100px);
-      }
-      to {
-        transform: translateY(0);
-      }
-    }
-  }
-
 `;
 
 export const ItemCard = styled(Box)`
@@ -59,12 +28,14 @@ export const ItemCard = styled(Box)`
   justify-content: center;
   margin-bottom: 5px;
   color: #CBD0D8;
-`;
+  `;
 
 export const ImageCard = styled.img`
   width: 300px;
   height: 250px;
   border-radius: 10px;
+  animation: show;
+  filter: ${props => props.showDescription && "blur(5px)"};
 `;
 
 export const ImagePlug = styled.div`
@@ -73,12 +44,53 @@ export const ImagePlug = styled.div`
   background-color: #e1e1e1;
 `;
 
+export const ButtonShowDescription = styled(Button)`
+  text-transform: none;
+  color: #D3AC2B;
+`;
+
 export const TextDescription = styled.p`
   position: absolute;
+  color: #CBD0D8;
   background-color: #333D51;
   border-radius: 10px;
   padding: 5px;
-  top: 100px;
+  top: 150px;
+  opacity: 0;
+      
+      &.hide {
+
+        animation: hide 300ms ease-in;
+      
+        @keyframes hide {
+          from {
+            transform: translateY(0);
+            opacity: 1;
+          }
+          to {
+            transform: translateY(100%);
+            opacity: 0;
+          }
+        }
+      }
+
+      &.show {
+        opacity: 1;
+
+        animation: show 300ms ease-in;
+      
+        @keyframes show {
+          from {
+            opacity: 0;
+            transform: translateY(100%);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      }
+    
 `;
 
 export const ButtonBasket = styled(Button)`

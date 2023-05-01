@@ -14,6 +14,7 @@ import {
   BoxOrderTitle,
   BoxBtnLoadMore,
   ButtonLoadMore,
+  Text,
 } from "./HistoryOrder.styled";
 
 const HistoryOrders = () => {
@@ -37,15 +38,15 @@ const HistoryOrders = () => {
           <ProductList component="ul">
             <ProductItem component="li">
               <TitlesOrder>Product:</TitlesOrder>
-              <p>{title}</p>
+              <Text>{title}</Text>
             </ProductItem>
             <ProductItem component="li">
               <TitlesOrder>Price:</TitlesOrder>
-              <p>${price}</p>
+              <Text>${price}</Text>
             </ProductItem>
             <ProductItem component="li">
               <TitlesOrder>Description:</TitlesOrder>
-              <p>{description}</p>
+              <Text>{description}</Text>
             </ProductItem>
           </ProductList>
         </ItemProduct>
@@ -57,10 +58,11 @@ const HistoryOrders = () => {
     <OrderItem component="li" key={id}>
       <BoxOrderTitle component="ul">
         <li>
-          <p>{parseDate(id)};</p>
+          {/* Title order with date + time + sum */}
+          <Text>{parseDate(id)};</Text>
         </li>
         <li>
-          <p>Total: ${totalAmount}</p>
+          <Text>Total: ${totalAmount}</Text>
         </li>
       </BoxOrderTitle>
       <OrderListProducts component="ul">

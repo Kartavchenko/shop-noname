@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Notiflix from "../../helpers/notifications";
-import { Button, Slide } from "@mui/material";
+import { Slide } from "@mui/material";
 import { removeItemFromBasket, cleenBasket } from "../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectorBasketItems, selectorUserData } from "../../redux/selectors";
@@ -18,6 +18,8 @@ import {
   ModalBack,
   IconSadSmile,
   EmphtyBasket,
+  ButtonOrderPay,
+  ButtonBack,
 } from "./Basket.styled";
 import { setDoc } from "firebase/firestore";
 
@@ -95,10 +97,10 @@ const Basket = () => {
       >
         <ModalTitle>{"Order"}</ModalTitle>
         <ModalBack>
-          <Button onClick={handleClose}>
+          <ButtonBack onClick={handleClose}>
             <IconBackArrow />
             Сontinue shopping
-          </Button>
+          </ButtonBack>
         </ModalBack>
         <ModalContainer>
           <ul>
@@ -115,9 +117,9 @@ const Basket = () => {
           </ul>
         </ModalContainer>
         <ModalOrder>
-          <Button variant="contained" onClick={handleOrder}>
+          <ButtonOrderPay variant="contained" onClick={handleOrder}>
             Order and pay ${totalAmount}
-          </Button>
+          </ButtonOrderPay>
         </ModalOrder>
       </ModalBasket>
     </div>

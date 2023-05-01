@@ -16,7 +16,6 @@ const CatalogPage = () => {
   const [page, setPage] = useState(0);
   const [getValueTotalPages, setValueGetTotalPages] = useState(0);
   const [items, setItems] = useState([]);
-  const [messageNoSearchResult, setMessageNoSearchResult] = useState("");
 
   const [querySearch] = useSearchParams();
   const queryValue = querySearch.get("title");
@@ -33,6 +32,7 @@ const CatalogPage = () => {
       try {
         const totalPages = await getTotalPages();
 
+        // Set total pages
         await setValueGetTotalPages(totalPages);
       } catch (error) {
         console.log(error);
@@ -43,33 +43,25 @@ const CatalogPage = () => {
   useEffect(() => {
     (async () => {
       try {
-        const data = await getDataThunk(page, queryValue); // Get products from API
-
-        if (data.length === 0) {
-          setMessageNoSearchResult("Nothing found");
-        }
+        // Get data from server
+        const data = await getDataThunk(page, queryValue);
 
         setItems(data);
-
-        if (data.length > 0) {
-          setMessageNoSearchResult("");
-        }
       } catch (error) {
         console.log(error);
       }
     })();
   }, [page, queryValue]);
 
-  const checkIdItemInBasket = (id) =>
-    basketItems.find((item) => item.id === id);
-
-  const findItemId = (id) => items.find((item) => item.id === id);
+  // Find item by id
+  const findItemID = (array, id) => array.find((item) => item.id === id);
 
   const addToBasket = (id) => {
     if (isLoggedIn) {
-      const itemID = findItemId(id);
+      const itemID = findItemID(items, id);
 
-      if (checkIdItemInBasket(id)) {
+      // Check if item is already in basket
+      if (findItemID(basketItems, id)) {
         return Notiflix.Notify.info("Already added");
       }
 
@@ -77,6 +69,7 @@ const CatalogPage = () => {
 
       Notiflix.Notify.success(`Added ${itemID.title}`);
     } else {
+      // If user is not logged in
       Notiflix.Notify.failure("Please login in or register account");
     }
   };
@@ -91,15 +84,16 @@ const CatalogPage = () => {
   return (
     <Main>
       <BoxList component="ul">
-        {messageNoSearchResult ? (
-          <h2>{messageNoSearchResult}</h2>
-        ) : (
+        {items.map((elements) => (
           <List
+            key={elements.id}
+            elements={elements}
+            findItemID={findItemID}
             items={items}
             checkItemsInItems={checkItemsInItems}
             addToBasket={addToBasket}
           />
-        )}
+        ))}
       </BoxList>
       {items.length ? (
         <BoxPagination>

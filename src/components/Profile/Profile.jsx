@@ -6,10 +6,10 @@ import {
   GoCatalogButton,
   LogOutBtn,
   LogOutIcon,
-  InputName,
+  Input,
   Form,
   BtnChangeName,
-  BoxTitleLogout,
+  BoxTitle,
   CheckIconStyled,
 } from "./Profile.styled";
 
@@ -43,15 +43,16 @@ const Profile = () => {
 
   return (
     <Container>
-      <BoxTitleLogout>
+      <BoxTitle>
         <h2>Profile</h2>
         <LogOutBtn type="button" onClick={logOutBtn}>
           LogOut
           <LogOutIcon />
         </LogOutBtn>
-      </BoxTitleLogout>
+      </BoxTitle>
       <Form onSubmit={updateName}>
-        <InputName
+        <Input
+          color="warning"
           id="name"
           label="Name"
           name="name"
