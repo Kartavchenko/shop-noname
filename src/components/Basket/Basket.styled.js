@@ -10,6 +10,7 @@ export const ModalBasket = styled(Dialog)`
 `;
 
 export const EmphtyBasket = styled(Typography)`
+
 `;
 
 export const IconSadSmile = styled(SentimentVeryDissatisfiedIcon)`
@@ -41,7 +42,7 @@ export const ModalContainer = styled(DialogContent)`
 
 export const IconRemoveFromBasket = styled(RemoveShoppingCartIcon)`
   fill: #D3AC2B;
-  transition: transform 250ms, cubic-bezier(0.4, 0, 0.2, 1) 250ms;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover, :focus {
     scale: 1.1;
@@ -49,7 +50,8 @@ export const IconRemoveFromBasket = styled(RemoveShoppingCartIcon)`
 `;
 
 export const UsersBasket = styled(Button)`
-
+  color: rgba(246, 192, 38, 0.8);
+  
 @media screen and (min-width: 768px) {
   margin-right: 10px;
 }
@@ -68,7 +70,7 @@ export const ButtonBasket = styled(Button)`
 `;
 
 export const IconBasket = styled(ShoppingCartIcon)`
-  color: #ffffff;
+  fill: #ffffff;
 `;
 
 export const ButtonBack = styled(Button)`

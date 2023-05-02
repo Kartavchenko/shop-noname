@@ -25,6 +25,7 @@ const Registration = () => {
     <div>
       <Form component="form" onSubmit={handleSubmit(onSubmit)}>
         <Input
+          color="warning"
           type="email"
           id="email"
           label="Email"
@@ -35,6 +36,7 @@ const Registration = () => {
           {...register("email")}
         />
         <Input
+          color="warning"
           type="password"
           id="password"
           label="Password"

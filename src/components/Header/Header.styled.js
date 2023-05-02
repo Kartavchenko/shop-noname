@@ -35,9 +35,8 @@ export const BoxUser = styled(Box)`
 `;
 
 export const UserIcon = styled(PersonOutlineIcon)`
-  color: rgba(135, 31, 255, 0.8);
   align-items: center;
-  color: white;
+  fill: #ffffff;
 `;
 
 export const User = styled(NavLink)`
@@ -70,7 +69,7 @@ export const Logo = styled(NavLink)`
 `;
 
 export const LogoTitleMob = styled(Typography)`
-  color: #a103fc;
+  color: rgba(246, 192, 38, 0.8);
 
   @media screen and (min-width: 768px) {
     display: none;
@@ -78,7 +77,7 @@ export const LogoTitleMob = styled(Typography)`
 `;
 
 export const LogoTitleSubMob = styled(Typography)`
-  color: #5e03ff;
+  color: #F6C026;
 
   @media screen and (min-width: 768px) {
     display: none;
@@ -90,7 +89,7 @@ export const LogoTitle = styled(Typography)`
 
   @media screen and (min-width: 768px) {
     display: inline;
-    color: #a103fc;
+    color: rgba(246, 192, 38, 0.8);
   }
 `;
 
@@ -99,7 +98,7 @@ export const LogoTitleSub = styled(Typography)`
   
   @media screen and (min-width: 768px) {
     display: inline;
-    color: #5e03ff;
+    color: rgba(246, 192, 38, 0.8);
   }
 `;
 
@@ -109,6 +108,12 @@ export const LinkToLogin = styled(NavLink)`
 
 export const BtnToLogin = styled(Button)`
   margin-right: 20px;
+
+  background-color: rgba(246, 192, 38, 0.8); 
+
+  &:hover, :focus {
+    background-color: #F6C026;
+  }
 `;
 
 export const LinkToRegister = styled(NavLink)`
@@ -116,6 +121,11 @@ export const LinkToRegister = styled(NavLink)`
 `;
 
 export const BtnToRegister = styled(Button)`
-
+  border-color: rgba(246, 192, 38, 0.8); 
+  color: #CBD0D8;
+  
+  &:hover, :focus {
+    border-color: #F6C026;
+  }
 `;
 

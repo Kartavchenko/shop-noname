@@ -30,10 +30,12 @@ export const Input = styled(TextField)`
       border-color: #F6C026;
     }
   }
-	
 `;
 
-
 export const BtnRegister = styled(Button)`
-  
+  background-color: rgba(246, 192, 38, 0.8); 
+
+  &:hover, :focus {
+    background-color: #F6C026;
+  }
 `;

@@ -37,5 +37,10 @@ export const Input = styled(TextField)`
 `;
 
 export const BtnLogin = styled(Button)`
+  background-color: rgba(246, 192, 38, 0.8); 
+  color: #ffffff;
 
+  &:hover, :focus {
+    background-color: #F6C026;
+  }
 `;

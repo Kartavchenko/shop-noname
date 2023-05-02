@@ -14,7 +14,7 @@ const RegistrationPage = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/profile");
+      navigate("/profile/user");
     }
   }, [navigate, isLoggedIn]);
 

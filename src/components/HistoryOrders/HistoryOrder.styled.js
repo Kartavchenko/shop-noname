@@ -77,8 +77,8 @@ export const ProductList = styled(Box)`
 `;
 
 export const TitlesOrder = styled(Typography)`
-  font-weight: 600;
   color: #CBD0D8;
+  font-weight: 600;
 `;
 
 export const Text = styled.p`

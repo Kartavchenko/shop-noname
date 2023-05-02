@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Pagination } from "@mui/material";
 import { addItemToBasket } from "../../redux/userSlice";
-import { Main, BoxList, BoxPagination } from "./CatalogPage.styled";
+import {
+  Main,
+  BoxList,
+  BoxPagination,
+  PaginationStyled,
+} from "./CatalogPage.styled";
 import { getDataThunk, getTotalPages } from "../../redux/dataOperations";
 import {
   selectorIsLoggedInUser,
@@ -97,7 +101,7 @@ const CatalogPage = () => {
       </BoxList>
       {items.length ? (
         <BoxPagination>
-          <Pagination
+          <PaginationStyled
             onChange={(evt, page) => paginationPages(evt, page)}
             count={getValueTotalPages}
             variant="outlined"

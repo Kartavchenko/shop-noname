@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { TextField, Button } from "@mui/material";
 
 export const SearchField = styled(TextField)`
-  background-color: #ffffff;
+  background-color: #CBD0D8;
   border-radius: 10px;
   margin-left: 10px;
   margin-right: 5px;

@@ -28,7 +28,7 @@ export const ItemCard = styled(Box)`
   justify-content: center;
   margin-bottom: 5px;
   color: #CBD0D8;
-  `;
+`;
 
 export const ImageCard = styled.img`
   width: 300px;
@@ -56,40 +56,40 @@ export const TextDescription = styled.p`
   border-radius: 10px;
   padding: 5px;
   top: 150px;
-  opacity: 0;
+  opacity: ${props => props.showDescription ? 1 : 0};
       
-      &.hide {
+    &.hide {
 
-        animation: hide 300ms ease-in;
+      animation: hide 300ms ease-in;
       
-        @keyframes hide {
-          from {
-            transform: translateY(0);
-            opacity: 1;
-          }
-          to {
-            transform: translateY(100%);
-            opacity: 0;
-          }
+      @keyframes hide {
+        from {
+          transform: translateY(0);
+          opacity: ${props => props.showDescription ? 1 : 0};
+        }
+        to {
+          transform: translateY(100%);
+          opacity: 0;
         }
       }
+    }
 
-      &.show {
-        opacity: 1;
+    &.show {
+      opacity: 1;
 
-        animation: show 300ms ease-in;
+      animation: show 300ms ease-in;
       
-        @keyframes show {
-          from {
-            opacity: 0;
-            transform: translateY(100%);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+      @keyframes show {
+        from {
+          opacity: 0;
+          transform: translateY(100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
       }
+    }
     
 `;
 
@@ -101,7 +101,7 @@ export const ButtonBasket = styled(Button)`
 
 export const IconAddToBasket = styled(AddShoppingCartIcon)`
   fill: #D3AC2B; 
-  transition: transform 250ms, cubic-bezier(0.4, 0, 0.2, 1) 250ms;
+  transition: cubic-bezier(0.4, 0, 0.2, 1) 250ms;
 
   &:hover, :focus {
     scale: 1.1;
@@ -110,7 +110,6 @@ export const IconAddToBasket = styled(AddShoppingCartIcon)`
 
 export const IconAdded = styled(AddTaskIcon)`
   fill: #D3AC2B;
-  transition: transform 500ms;
 
   animation: mount 500ms ease-in-out;
   

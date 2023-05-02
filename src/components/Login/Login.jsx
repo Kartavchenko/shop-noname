@@ -25,6 +25,7 @@ const Login = () => {
     <BoxForm>
       <Form component="form" onSubmit={handleSubmit(onSubmit)}>
         <Input
+          color="warning"
           type="email"
           id="email"
           label="Email"
@@ -34,6 +35,7 @@ const Login = () => {
           {...register("email")}
         />
         <Input
+          color="warning"
           type="password"
           id="password"
           label="Password"

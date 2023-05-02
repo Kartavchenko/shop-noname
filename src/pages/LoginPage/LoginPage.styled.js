@@ -16,5 +16,10 @@ export const TitleForm = styled(Typography)`
 `;
 
 export const Link = styled(NavLink)`
+  color: rgba(246, 192, 38, 0.8); 
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1) ;
   
+  &:hover, :focus {
+    color: #F6C026;
+  }
 `;
