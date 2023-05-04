@@ -27,3 +27,9 @@ export const PaginationStyled = styled(Pagination)`
     border-color: #CBD0D8;
   }
 `;
+
+export const TextFail = styled.h2`
+  display: flex;
+  justify-content: center;
+  color: #CBD0D8;
+`;

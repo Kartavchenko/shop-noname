@@ -13,7 +13,7 @@ export const getTotalPages = async () => {
   try {
     const fetchPages = await fetch(`https://api.escuelajs.co/api/v1/products`);
     const getAllItems = await fetchPages.json();
-
+    
     const totalPages = await Math.ceil(getAllItems.length / 20);
     
     return await totalPages;

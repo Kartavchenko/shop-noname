@@ -7,6 +7,7 @@ import {
   BoxList,
   BoxPagination,
   PaginationStyled,
+  TextFail,
 } from "./CatalogPage.styled";
 import { getDataThunk, getTotalPages } from "../../redux/dataOperations";
 import {
@@ -20,6 +21,7 @@ const CatalogPage = () => {
   const [page, setPage] = useState(0);
   const [getValueTotalPages, setValueGetTotalPages] = useState(0);
   const [items, setItems] = useState([]);
+  const [emptyRespons, setEmptyRespons] = useState(false);
 
   const [querySearch] = useSearchParams();
   const queryValue = querySearch.get("title");
@@ -34,6 +36,25 @@ const CatalogPage = () => {
   useEffect(() => {
     (async () => {
       try {
+        // Get data from server
+        const data = await getDataThunk(page, queryValue);
+
+        if (!data.length) {
+          setEmptyRespons(true);
+        } else {
+          setEmptyRespons(false);
+        }
+
+        setItems(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [page, queryValue]);
+
+  useEffect(() => {
+    (async () => {
+      try {
         const totalPages = await getTotalPages();
 
         // Set total pages
@@ -43,19 +64,6 @@ const CatalogPage = () => {
       }
     })();
   }, []);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        // Get data from server
-        const data = await getDataThunk(page, queryValue);
-
-        setItems(data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [page, queryValue]);
 
   // Find item by id
   const findItemID = (array, id) => array.find((item) => item.id === id);
@@ -87,18 +95,22 @@ const CatalogPage = () => {
 
   return (
     <Main>
-      <BoxList component="ul">
-        {items.map((elements) => (
-          <List
-            key={elements.id}
-            elements={elements}
-            findItemID={findItemID}
-            items={items}
-            checkItemsInItems={checkItemsInItems}
-            addToBasket={addToBasket}
-          />
-        ))}
-      </BoxList>
+      {emptyRespons ? (
+        <TextFail>Sorry, nothing to find</TextFail>
+      ) : (
+        <BoxList component="ul">
+          {items.map((elements) => (
+            <List
+              key={elements.id}
+              elements={elements}
+              findItemID={findItemID}
+              items={items}
+              checkItemsInItems={checkItemsInItems}
+              addToBasket={addToBasket}
+            />
+          ))}
+        </BoxList>
+      )}
       {items.length ? (
         <BoxPagination>
           <PaginationStyled
