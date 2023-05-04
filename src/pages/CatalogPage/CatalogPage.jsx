@@ -96,7 +96,7 @@ const CatalogPage = () => {
   return (
     <Main>
       {emptyRespons ? (
-        <TextFail>Sorry, nothing to find</TextFail>
+        <TextFail>Sorry, found nothing</TextFail>
       ) : (
         <BoxList component="ul">
           {items.map((elements) => (
