@@ -30,6 +30,7 @@ const Profile = () => {
   const updateName = (e) => {
     e.preventDefault();
     dispatch(changeNameAccount(userChangedName));
+
     setuserChangedName("");
     setChangeMarkName(true);
     checkIconTimeout();

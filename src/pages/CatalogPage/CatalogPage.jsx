@@ -9,7 +9,7 @@ import {
   PaginationStyled,
   TextFail,
 } from "./CatalogPage.styled";
-import { getDataThunk, getTotalPages } from "../../redux/dataOperations";
+import { getDataThunk } from "../../redux/dataOperations";
 import {
   selectorIsLoggedInUser,
   selectorBasketItems,
@@ -18,55 +18,54 @@ import Notiflix from "../../helpers/notifications";
 import List from "../../components/List/List";
 
 const CatalogPage = () => {
-  const [page, setPage] = useState(0);
-  const [getValueTotalPages, setValueGetTotalPages] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageLimit] = useState(12);
+  const [getTotalPages, setGetTotalPages] = useState();
   const [items, setItems] = useState([]);
   const [emptyRespons, setEmptyRespons] = useState(false);
 
   const [querySearch] = useSearchParams();
-  const queryValue = querySearch.get("title");
+  const queryValue = querySearch.get("query") ?? "";
 
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
   const basketItems = useSelector(selectorBasketItems);
 
-  const checkItemsInItems = basketItems.map((item) => item.id);
+  const checkProductInItems = basketItems.map((item) => item._id);
 
   useEffect(() => {
     (async () => {
       try {
         // Get data from server
-        const data = await getDataThunk(page, queryValue);
 
-        if (!data.length) {
-          setEmptyRespons(true);
-        } else {
-          setEmptyRespons(false);
+        if (queryValue) {
+          setPageNumber(1);
         }
 
-        setItems(data);
+        const { getProducts, totalPages } = await getDataThunk(
+          pageNumber,
+          pageLimit,
+          queryValue
+        );
+
+        if (!getProducts.length) {
+          return setEmptyRespons(true);
+        }
+
+        setEmptyRespons(false);
+
+        setGetTotalPages(totalPages);
+
+        setItems(getProducts);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [page, queryValue]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const totalPages = await getTotalPages();
-
-        // Set total pages
-        await setValueGetTotalPages(totalPages);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+  }, [pageNumber, pageLimit, queryValue]);
 
   // Find item by id
-  const findItemID = (array, id) => array.find((item) => item.id === id);
+  const findItemID = (array, id) => array.find((item) => item._id === id);
 
   const addToBasket = (id) => {
     if (isLoggedIn) {
@@ -79,17 +78,15 @@ const CatalogPage = () => {
 
       dispatch(addItemToBasket(itemID));
 
-      Notiflix.Notify.success(`Added ${itemID.title}`);
+      Notiflix.Notify.success(`Added ${itemID.name}`);
     } else {
       // If user is not logged in
       Notiflix.Notify.failure("Please login in or register account");
     }
   };
 
-  const paginationPages = (evt, page) => {
-    const itemsPerPage = 20;
-    const current = (page - 1) * itemsPerPage;
-    setPage(current);
+  const paginationPages = (page) => {
+    setPageNumber(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -99,23 +96,22 @@ const CatalogPage = () => {
         <TextFail>Sorry, nothing to find</TextFail>
       ) : (
         <BoxList component="ul">
-          {items.map((elements) => (
+          {items.map((items) => (
             <List
-              key={elements.id}
-              elements={elements}
-              findItemID={findItemID}
+              key={items._id}
               items={items}
-              checkItemsInItems={checkItemsInItems}
+              findItemID={findItemID}
+              checkProductInItems={checkProductInItems}
               addToBasket={addToBasket}
             />
           ))}
         </BoxList>
       )}
-      {items.length ? (
+      {items.length && !emptyRespons ? (
         <BoxPagination>
           <PaginationStyled
-            onChange={(evt, page) => paginationPages(evt, page)}
-            count={getValueTotalPages}
+            onChange={(evt, page) => paginationPages(page)}
+            count={getTotalPages}
             variant="outlined"
             color="primary"
             shape="rounded"

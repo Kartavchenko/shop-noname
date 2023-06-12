@@ -6,14 +6,15 @@ import {
   ItemsList,
   ItemCard,
   ImageCard,
+  TextCard,
   Card,
   IconAdded,
   TextDescription,
   ButtonShowDescription,
 } from "./List.styled";
 
-const List = ({ elements, addToBasket, checkItemsInItems }) => {
-  const { id, category, images, title, price, description } = elements;
+const List = ({ items, addToBasket, checkProductInItems }) => {
+  const { _id, category, image_url, name, price, description } = items;
 
   const [showDescription, setShowDescription] = useState(false);
 
@@ -27,18 +28,18 @@ const List = ({ elements, addToBasket, checkItemsInItems }) => {
         <ItemCard component="li">
           <ImageCard
             showDescription={showDescription}
-            src={images ?? plug}
+            src={image_url ?? plug}
             alt="equipment"
           />
         </ItemCard>
         <ItemCard component="li">
-          <p>{title}</p>
+          <TextCard>{name}</TextCard>
         </ItemCard>
         <ItemCard component="li">
-          <p>Category: {category.name}</p>
+          <TextCard>Category: {category}</TextCard>
         </ItemCard>
         <ItemCard component="li">
-          <p>{description.slice(0, 35)}</p>
+          <TextCard>{description.slice(0, 35)}</TextCard>
           <TextDescription className={`${showDescription ? "show" : "hide"}`}>
             {description}
           </TextDescription>
@@ -54,8 +55,8 @@ const List = ({ elements, addToBasket, checkItemsInItems }) => {
         </ItemCard>
         <ItemCard component="li">
           <p>${price}</p>
-          <ButtonBasket type="button" onClick={() => addToBasket(id)}>
-            {checkItemsInItems.includes(id) ? (
+          <ButtonBasket type="button" onClick={() => addToBasket(_id)}>
+            {checkProductInItems.includes(_id) ? (
               <IconAdded />
             ) : (
               <IconAddToBasket />

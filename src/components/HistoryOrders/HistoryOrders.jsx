@@ -31,14 +31,14 @@ const HistoryOrders = () => {
   const totalOrdersShow = orderListHistory.length;
 
   // order products list
-  const orderDetails = (list) =>
-    list.map(({ title, price, description }) => {
+  const eachItemInOrder = (list) =>
+    list.map(({ name, price, description }) => {
       return (
-        <ItemProduct component="li" key={title}>
+        <ItemProduct component="li" key={name}>
           <ProductList component="ul">
             <ProductItem component="li">
               <TitlesOrder>Product:</TitlesOrder>
-              <Text>{title}</Text>
+              <Text>{name}</Text>
             </ProductItem>
             <ProductItem component="li">
               <TitlesOrder>Price:</TitlesOrder>
@@ -54,26 +54,28 @@ const HistoryOrders = () => {
     });
 
   // order user
-  const orderItems = orderListHistory.map(({ id, order, totalAmount }) => (
-    <OrderItem component="li" key={id}>
-      <BoxOrderTitle component="ul">
-        <li>
-          {/* Title order with date + time + sum */}
-          <Text>{parseDate(id)};</Text>
-        </li>
-        <li>
-          <Text>Total: ${totalAmount}</Text>
-        </li>
-      </BoxOrderTitle>
-      <OrderListProducts component="ul">
-        {orderDetails(order)}
-      </OrderListProducts>
-    </OrderItem>
-  ));
+  const orderList = orderListHistory.map(
+    ({ _id, items, totalPrice, orderDate }) => (
+      <OrderItem component="li" key={_id}>
+        <BoxOrderTitle component="ul">
+          <li>
+            {/* Title order with date + time + sum */}
+            <Text>{parseDate(orderDate)};</Text>
+          </li>
+          <li>
+            <Text>Total: ${totalPrice}</Text>
+          </li>
+        </BoxOrderTitle>
+        <OrderListProducts component="ul">
+          {eachItemInOrder(items)}
+        </OrderListProducts>
+      </OrderItem>
+    )
+  );
 
   return (
     <BoxOrders>
-      <OrderList component="ul">{orderItems}</OrderList>
+      <OrderList component="ul">{orderList}</OrderList>
       {totalOrdersShow ? (
         <BoxBtnLoadMore>
           <ButtonLoadMore

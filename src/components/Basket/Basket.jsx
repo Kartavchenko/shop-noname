@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import Notiflix from "../../helpers/notifications";
 import { Slide } from "@mui/material";
-import { removeItemFromBasket, cleenBasket } from "../../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Notiflix from "../../helpers/notifications";
+import { removeItemFromBasket, cleenBasket } from "../../redux/userSlice";
 import { selectorBasketItems, selectorUserData } from "../../redux/selectors";
 import { ItemBasket } from "./ItemBasket/ItemBasket";
-import { doc } from "firebase/firestore";
-import { fireDB } from "../../firebase/config";
+import { addToHistoryOrders } from "../../redux/dataOperations";
 import {
   UsersBasket,
   IconBasket,
@@ -21,7 +20,6 @@ import {
   ButtonOrderPay,
   ButtonBack,
 } from "./Basket.styled";
-import { setDoc } from "firebase/firestore";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
@@ -30,19 +28,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Basket = () => {
   const [open, setOpen] = useState(false); // Modal state
 
-  const userID = useSelector(selectorUserData);
+  const { uid } = useSelector(selectorUserData);
 
   const dispatch = useDispatch();
 
   const basketItems = useSelector(selectorBasketItems);
 
+  const totalPrice = basketItems.reduce((acc, item) => acc + item.price, 0);
+
   const addToOrderHistory = async (order) => {
-    // Create document in firebase collection
     try {
-      await setDoc(doc(fireDB, `${userID.email}/${Date.now()}`), {
-        order,
-        totalAmount,
-      }); // Add to firebase collection
+      await addToHistoryOrders(uid, order);
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -56,6 +52,12 @@ const Basket = () => {
     setOpen(false);
   };
 
+  const destructuringBasketItems = basketItems.map(
+    ({ image_url, category, name, price, description }) => {
+      return { image_url, category, name, price, description };
+    }
+  );
+
   const handleOrder = async () => {
     if (basketItems.length === 0)
       return Notiflix.Report.failure(
@@ -63,7 +65,10 @@ const Basket = () => {
         "Please add product to basket.",
         "Okay"
       );
-    await addToOrderHistory(basketItems);
+    await addToOrderHistory({
+      items: destructuringBasketItems,
+      totalPrice: totalPrice,
+    });
 
     handleClose();
 
@@ -74,8 +79,6 @@ const Basket = () => {
       "Okay"
     );
   };
-
-  const totalAmount = basketItems.reduce((acc, item) => acc + item.price, 0);
 
   const removeFromBasket = (id) => {
     dispatch(removeItemFromBasket(id));
@@ -118,7 +121,7 @@ const Basket = () => {
         </ModalContainer>
         <ModalOrder>
           <ButtonOrderPay variant="contained" onClick={handleOrder}>
-            Order and pay ${totalAmount}
+            Order and pay ${totalPrice}
           </ButtonOrderPay>
         </ModalOrder>
       </ModalBasket>
