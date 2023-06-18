@@ -34,9 +34,9 @@ export const ModalTitle = styled(DialogTitle)`
 `;
 
 export const ModalContainer = styled(DialogContent)`
+  display: flex;
+  flex-direction: column;
   background-color: #4C4556;
-	min-width: 500px;
-	min-height: 400px;
   color: #CBD0D8;
 `;
 

@@ -11,7 +11,17 @@ export const getDataThunk = async (page, pageLimit, query) => {
   const ifQueryNull = !query ? "" : `&query=${query}`;
   
   try {
-    const {data} = await instance.get(`/products?page=${page}&pageLimit=${pageLimit}${ifQueryNull}`);
+    const { data } = await instance.get(`/products?page=${page}&pageLimit=${pageLimit}${ifQueryNull}`);
+
+    return data;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export const getOneProduct = async (id) => { 
+  try {
+    const { data } = await instance.get(`/products/${id}`);
 
     return data;
   } catch (error) {
@@ -23,7 +33,7 @@ export const getHisrotyOrdersUser = async (uid) => {
   try {
     const { data } = await instance.get(`history-orders/${uid}`);
 
-    return data.orders;
+    return data.orders.reverse();
   } catch (error) {
     return error.message;
   }

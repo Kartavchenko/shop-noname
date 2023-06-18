@@ -76,6 +76,7 @@ const CatalogPage = () => {
         return Notiflix.Notify.info("Already added");
       }
 
+      // Add item to basket
       dispatch(addItemToBasket(itemID));
 
       Notiflix.Notify.success(`Added ${itemID.name}`);

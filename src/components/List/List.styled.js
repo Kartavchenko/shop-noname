@@ -49,11 +49,6 @@ export const ImagePlug = styled.div`
   background-color: #e1e1e1;
 `;
 
-export const ButtonShowDescription = styled(Button)`
-  text-transform: none;
-  color: #D3AC2B;
-`;
-
 export const TextDescription = styled.p`
   position: absolute;
   color: #CBD0D8;
