@@ -25,7 +25,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
-const Basket = () => {
+function Basket() {
   const [open, setOpen] = useState(false); // Modal state
 
   const { uid } = useSelector(selectorUserData);
@@ -53,8 +53,8 @@ const Basket = () => {
   };
 
   const destructuringBasketItems = basketItems.map(
-    ({ image_url, category, name, price, description }) => {
-      return { image_url, category, name, price, description };
+    ({ image_url, category, name, price, description, quantity }) => {
+      return { image_url, category, name, price, description, quantity };
     }
   );
 
@@ -127,6 +127,6 @@ const Basket = () => {
       </ModalBasket>
     </div>
   );
-};
+}
 
 export default Basket;

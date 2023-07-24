@@ -38,6 +38,11 @@ export const ModalContainer = styled(DialogContent)`
   flex-direction: column;
   background-color: #4C4556;
   color: #CBD0D8;
+  
+  @media screen and (min-width: 768px) {
+    min-height: 300px;
+    min-width: 300px;
+  }
 `;
 
 export const IconRemoveFromBasket = styled(RemoveShoppingCartIcon)`

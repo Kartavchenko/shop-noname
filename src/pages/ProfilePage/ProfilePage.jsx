@@ -10,7 +10,7 @@ import ListNavProfile from "../../components/ListNavProfile/ListNavProfile";
 import { getDataUser } from "../../redux/authOperations";
 import { getHisrotyOrdersUser } from "../../redux/dataOperations";
 
-const ProfilePage = () => {
+function ProfilePage() {
   const [historyOrders, setHistoryOrders] = useState([]);
 
   const [searchParams] = useSearchParams();
@@ -44,6 +44,8 @@ const ProfilePage = () => {
       try {
         const result = await getHisrotyOrdersUser(uid);
 
+        if (!result) return;
+
         setHistoryOrders(result);
       } catch (error) {
         console.log(error);
@@ -59,6 +61,6 @@ const ProfilePage = () => {
       </Suspense>
     </Container>
   );
-};
+}
 
 export default ProfilePage;

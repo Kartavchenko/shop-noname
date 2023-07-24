@@ -13,5 +13,5 @@ export const Item = styled(Box)`
   display: flex;
   flex-direction: column;
   padding: 10px;
-  width: 300px;
+  width: 200px;
 `;

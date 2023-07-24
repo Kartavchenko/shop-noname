@@ -8,10 +8,9 @@ import {
   ImageCard,
   TextCard,
   Card,
-  IconAdded,
 } from "./List.styled";
 
-const List = ({ items, addToBasket, checkProductInItems }) => {
+function List({ items, addToBasket, checkProductInItems }) {
   const { _id, category, image_url, price, description } = items;
 
   return (
@@ -33,20 +32,15 @@ const List = ({ items, addToBasket, checkProductInItems }) => {
         <ItemCard component="li">
           <TextCard>{description.slice(0, 35)}</TextCard>
         </ItemCard>
-        <ItemCard component="li"></ItemCard>
         <ItemCard component="li">
           <p>${price}</p>
           <ButtonBasket type="button" onClick={() => addToBasket(_id)}>
-            {checkProductInItems.includes(_id) ? (
-              <IconAdded />
-            ) : (
-              <IconAddToBasket />
-            )}
+            <IconAddToBasket />
           </ButtonBasket>
         </ItemCard>
       </ItemsList>
     </Card>
   );
-};
+}
 
 export default List;

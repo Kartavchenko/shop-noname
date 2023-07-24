@@ -21,7 +21,7 @@ import {
 import { useSelector } from "react-redux";
 import { selectorIsLoggedInUser } from "../../redux/selectors";
 
-const Header = () => {
+function Header() {
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
 
   return (
@@ -56,6 +56,6 @@ const Header = () => {
       </NavBar>
     </HeaderBox>
   );
-};
+}
 
 export default Header;

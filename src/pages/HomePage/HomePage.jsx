@@ -5,7 +5,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { BarsLoader } from "../../components/loaders/LoaderBars";
 
-const HomePage = () => {
+function HomePage() {
   return (
     <Container>
       <Header />
@@ -17,6 +17,6 @@ const HomePage = () => {
       <Footer />
     </Container>
   );
-};
+}
 
 export default HomePage;

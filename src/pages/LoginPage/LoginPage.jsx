@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectorIsLoggedInUser } from "../../redux/selectors";
 
-const LoginPage = () => {
+function LoginPage() {
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
 
   const navigate = useNavigate();
@@ -27,6 +27,6 @@ const LoginPage = () => {
       <Link to="/register">Haven't account? go to Registration</Link>
     </BoxLogin>
   );
-};
+}
 
 export default LoginPage;

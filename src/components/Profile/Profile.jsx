@@ -13,7 +13,7 @@ import {
   CheckIconStyled,
 } from "./Profile.styled";
 
-const Profile = () => {
+function Profile() {
   const [userChangedName, setuserChangedName] = useState("");
   const [changeMarkName, setChangeMarkName] = useState(false);
 
@@ -73,6 +73,6 @@ const Profile = () => {
       <GoCatalogButton to="/">{"<-"}Go to catalog</GoCatalogButton>
     </Container>
   );
-};
+}
 
 export default Profile;

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { selectorIsLoggedInUser } from "../../redux/selectors";
 
-const RegistrationPage = () => {
+function RegistrationPage() {
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
 
   const navigate = useNavigate();

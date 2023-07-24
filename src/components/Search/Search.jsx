@@ -4,7 +4,7 @@ import { InputAdornment, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { SearchField } from "./Search.styled";
 
-const SearchBar = () => {
+function SearchBar() {
   const [searchParams, setSearchParams] = useSearchParams({});
 
   const queryValue = searchParams.get("query") ?? "";
@@ -54,6 +54,6 @@ const SearchBar = () => {
       />
     </form>
   );
-};
+}
 
 export default SearchBar;

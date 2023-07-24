@@ -1,6 +1,6 @@
 import { Bars } from "react-loader-spinner";
 
-export const BarsLoader = () => {
+export function BarsLoader() {
   return (
     <Bars
       height="80"
@@ -16,4 +16,4 @@ export const BarsLoader = () => {
       visible={true}
     />
   );
-};
+}

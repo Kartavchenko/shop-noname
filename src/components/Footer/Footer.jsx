@@ -1,6 +1,6 @@
 import { BoxFooter, TextFooter, GitLink } from "./Footer.styled";
 
-const Footer = () => {
+function Footer() {
   return (
     <BoxFooter>
       <div>

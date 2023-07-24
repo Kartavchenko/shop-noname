@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 
-const NotFound = () => {
+function NotFound() {
   return (
     <div>
       <Typography variant="h2" align="center">
@@ -8,6 +8,6 @@ const NotFound = () => {
       </Typography>
     </div>
   );
-};
+}
 
 export default NotFound;

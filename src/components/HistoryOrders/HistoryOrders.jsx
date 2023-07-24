@@ -17,7 +17,7 @@ import {
   Text,
 } from "./HistoryOrder.styled";
 
-const HistoryOrders = () => {
+function HistoryOrders() {
   const [orderListHistory, setOrderListHistory] = useState([]);
   const [loadMore, setLoadMore] = useState(10);
 
@@ -27,16 +27,17 @@ const HistoryOrders = () => {
     setOrderListHistory(historyOrders.slice(0, loadMore));
   }, [historyOrders, loadMore]);
 
-  const totalOrdersHad = historyOrders.length;
+  const totalOrdersHave = historyOrders.length;
   const totalOrdersShow = orderListHistory.length;
 
   // order products list
   const eachItemInOrder = (list) =>
-    list.map(({ name, price, description }) => {
+    list.map(({ name, price, description, quantity }) => {
       return (
         <ItemProduct component="li" key={name}>
           <ProductList component="ul">
             <ProductItem component="li">
+              <TitlesOrder>X{quantity}</TitlesOrder>
               <TitlesOrder>Product:</TitlesOrder>
               <Text>{name}</Text>
             </ProductItem>
@@ -75,11 +76,15 @@ const HistoryOrders = () => {
 
   return (
     <BoxOrders>
-      <OrderList component="ul">{orderList}</OrderList>
+      {totalOrdersHave ? (
+        <OrderList component="ul">{orderList}</OrderList>
+      ) : (
+        <h2>No history exist</h2>
+      )}
       {totalOrdersShow ? (
         <BoxBtnLoadMore>
           <ButtonLoadMore
-            disabled={totalOrdersShow >= totalOrdersHad}
+            disabled={totalOrdersShow >= totalOrdersHave}
             variant="contained"
             color="secondary"
             onClick={() =>
@@ -95,6 +100,6 @@ const HistoryOrders = () => {
       ) : null}
     </BoxOrders>
   );
-};
+}
 
 export default HistoryOrders;

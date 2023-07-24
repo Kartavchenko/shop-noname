@@ -18,15 +18,14 @@ import {
 } from "./ModalProducts.styled";
 import { getOneProduct } from "../../redux/dataOperations";
 
-const ModalProduct = ({ items, addToBasket, checkProductInItems }) => {
+function ModalProduct({ items, addToBasket, checkProductInItems }) {
   const { _id, image_url, name, price, description } = items;
 
-  const [amountItem, setAmountItem] = useState(1);
+  const [amountItems, setAmountItems] = useState(1);
 
   const [open, setOpen] = useState(false);
 
   const handleClose = () => setOpen(false);
-
   const handleOpen = () => {
     setOpen(true);
     getOneItem(_id);
@@ -35,12 +34,12 @@ const ModalProduct = ({ items, addToBasket, checkProductInItems }) => {
   const getOneItem = async (id) => await getOneProduct(id);
 
   const multipleItem = () => {
-    setAmountItem(amountItem + 1);
+    setAmountItems(amountItems + 1);
   };
 
   const reduceItem = () => {
-    if (amountItem <= 1) return;
-    setAmountItem(amountItem - 1);
+    if (amountItems <= 1) return;
+    setAmountItems(amountItems - 1);
   };
 
   return (
@@ -88,8 +87,11 @@ const ModalProduct = ({ items, addToBasket, checkProductInItems }) => {
                       <AddIcon />
                     </ReduceItemButton>
                   </Price>
-                  <Typography variant="h6">x{amountItem}</Typography>
-                  <ButtonBasket type="button" onClick={() => addToBasket(_id)}>
+                  <Typography variant="h6">x{amountItems}</Typography>
+                  <ButtonBasket
+                    type="button"
+                    onClick={() => addToBasket(_id, amountItems)}
+                  >
                     {checkProductInItems.includes(_id) ? (
                       <IconAdded />
                     ) : (
@@ -112,6 +114,6 @@ const ModalProduct = ({ items, addToBasket, checkProductInItems }) => {
       </Modal>
     </div>
   );
-};
+}
 
 export default ModalProduct;

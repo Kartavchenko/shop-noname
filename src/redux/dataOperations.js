@@ -31,7 +31,9 @@ export const getOneProduct = async (id) => {
 
 export const getHisrotyOrdersUser = async (uid) => {
   try {
-    const { data } = await instance.get(`history-orders/${uid}`);
+    const { data } = await instance.get(`/history-orders/${uid}`);
+
+    if (!data.orders) return data.orders;
 
     return data.orders.reverse();
   } catch (error) {
@@ -41,8 +43,8 @@ export const getHisrotyOrdersUser = async (uid) => {
 
 export const addToHistoryOrders = async (uid, order) => {
   try {
-    const { data } = await instance.post(`history-orders`, {userId: uid, orders: [order]});
-
+    const { data } = await instance.post("/history-orders", {userId: uid, orders: [order]});
+    
     return data;
   } catch (error) {
     return error.message;
