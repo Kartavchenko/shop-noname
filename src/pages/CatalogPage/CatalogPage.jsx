@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToBasket } from "../../redux/userSlice";
 import {
@@ -8,7 +8,9 @@ import {
   BoxPagination,
   PaginationStyled,
   TextFail,
+  BoxLoading,
 } from "./CatalogPage.styled";
+import BarsLoader from "../../components/loaders/LoaderBars";
 import { getDataThunk } from "../../redux/dataOperations";
 import { selectorBasketItems } from "../../redux/selectors";
 import Notiflix from "../../helpers/notifications";
@@ -17,11 +19,16 @@ import List from "../../components/List/List";
 function CatalogPage() {
   const [pageNumber, setPageNumber] = useState(1);
   const [pageLimit] = useState(12);
-  const [getTotalPages, setGetTotalPages] = useState();
+  const [getTotalPages, setGetTotalPages] = useState(1);
   const [items, setItems] = useState([]);
   const [emptyRespons, setEmptyRespons] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  const { category } = useParams();
   const [querySearch] = useSearchParams();
+
+  const navigate = useNavigate();
+
   const queryValue = querySearch.get("query") ?? "";
 
   const dispatch = useDispatch();
@@ -30,20 +37,32 @@ function CatalogPage() {
 
   const checkProductInItems = basketItems.map((item) => item._id);
 
+  // Find item by id
+  const findItemID = (array, id) => array.find((item) => item._id === id);
+
   useEffect(() => {
     (async () => {
       try {
         // Get data from server
 
+        if (category && queryValue) {
+          navigate("/");
+        }
+
         if (queryValue) {
           setPageNumber(1);
         }
 
-        const { getProducts, totalPages } = await getDataThunk(
+        setLoading(true);
+
+        const { getProducts, totalPages, getByCategory } = await getDataThunk(
           pageNumber,
           pageLimit,
-          queryValue
+          queryValue,
+          category
         );
+
+        setLoading(false);
 
         if (!getProducts.length) {
           return setEmptyRespons(true);
@@ -51,17 +70,24 @@ function CatalogPage() {
 
         setEmptyRespons(false);
 
-        setGetTotalPages(totalPages);
+        if (getByCategory.length) {
+          setGetTotalPages(Math.floor(getByCategory.length / pageLimit) || 1);
+        } else {
+          setGetTotalPages(totalPages);
+        }
+
+        if (getByCategory.length) {
+          return setItems(getByCategory);
+        }
 
         setItems(getProducts);
       } catch (error) {
+        setLoading(false);
+
         console.log(error);
       }
     })();
-  }, [pageNumber, pageLimit, queryValue]);
-
-  // Find item by id
-  const findItemID = (array, id) => array.find((item) => item._id === id);
+  }, [pageNumber, pageLimit, queryValue, category, navigate]);
 
   const addToBasket = (id, quantity = 1) => {
     const itemID = findItemID(items, id);
@@ -82,6 +108,11 @@ function CatalogPage() {
 
   return (
     <Main>
+      {loading && (
+        <BoxLoading>
+          <BarsLoader />
+        </BoxLoading>
+      )}
       {emptyRespons ? (
         <TextFail>Sorry, nothing to find</TextFail>
       ) : (

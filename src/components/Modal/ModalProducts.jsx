@@ -46,7 +46,6 @@ function ModalProduct({ items, addToBasket, checkProductInItems }) {
     <div>
       <ButtonModal onClick={handleOpen}>{name}</ButtonModal>
       <Modal
-        style={{ overflow: "auto", marginTop: "50px", marginBottom: "50px" }}
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}

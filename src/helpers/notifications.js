@@ -89,12 +89,12 @@ Notiflix.Report.init({
 	cssAnimationDuration: 360,
 	cssAnimationStyle: 'fade',
 	success: {
-	svgColor: '#a103fc',
+	svgColor: '#d3ac2b',
 	titleColor: '#1e1e1e',
 	messageColor: '#242424',
-	buttonBackground: '#a103fc',
+	buttonBackground: '#d3ac2b',
 	buttonColor: '#fff',
-	backOverlayColor: 'rgba(38,192,211,0.2)',
+	backOverlayColor: 'rgba(50,198,130,0.1)',
 	},
 	failure: {
 	svgColor: '#ff5549',

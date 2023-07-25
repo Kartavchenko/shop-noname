@@ -7,12 +7,13 @@ import axios from "axios";
   },
 });
 
-export const getDataThunk = async (page, pageLimit, query) => { 
+export const getDataThunk = async (page, pageLimit, query, category) => { 
   const ifQueryNull = !query ? "" : `&query=${query}`;
+  const ifCategoryUndef = !category ? "" : `/${category}`;
   
   try {
-    const { data } = await instance.get(`/products?page=${page}&pageLimit=${pageLimit}${ifQueryNull}`);
-
+    const { data } = await instance.get(`/products${ifCategoryUndef}?page=${page}&pageLimit=${pageLimit}${ifQueryNull}`);
+    console.log(data)
     return data;
   } catch (error) {
     return error.message;

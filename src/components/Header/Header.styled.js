@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { Box, Button, Typography, Link } from "@mui/material";
 import { NavLink } from 'react-router-dom';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import GridViewIcon from '@mui/icons-material/GridView';
+import WidgetsIcon from '@mui/icons-material/Widgets';
 
 export const HeaderBox = styled(Box)`
   padding: 0 10px 0 10px;
@@ -14,6 +16,33 @@ export const HeaderBox = styled(Box)`
   @media screen and (min-width: 768px){
     padding: 0 20px 0 20px;
   }
+`;
+
+export const BoxFilterBtns = styled(Box)`
+  position: absolute;
+  top: 60px;
+  background-color: #433E49;
+  z-index: 10;
+`;
+
+export const GridFilterBtn = styled(Button)`
+  min-width: 40px;
+  background-color: #D3AC2B;
+  margin-left: 5px;
+
+  transition: cubic-bezier(0.4, 0, 0.2, 1) 250ms;
+  
+  &:hover, :focus {
+    background-color: #F6C026;
+  }
+`;
+
+export const GridFilterIconOpen = styled(WidgetsIcon)`
+  color: #433E49;
+`;
+
+export const GridFilterIconClose = styled(GridViewIcon)`
+  color: #433E49;
 `;
 
 export const NavBar = styled(Box)`

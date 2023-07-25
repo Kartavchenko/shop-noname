@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Container, BoxContent } from "./HomePage.styled";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import { BarsLoader } from "../../components/loaders/LoaderBars";
+import BarsLoader from "../../components/loaders/LoaderBars";
 
 function HomePage() {
   return (

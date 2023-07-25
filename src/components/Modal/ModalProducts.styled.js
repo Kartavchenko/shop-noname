@@ -13,8 +13,9 @@ export const ButtonModal = styled(Button)`
 `;
 
 export const ModalBox = styled(Box)`
+		overflow: auto;
 		position: absolute;
-		top: 100%;
+		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 		box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);

@@ -34,7 +34,10 @@ function Basket() {
 
   const basketItems = useSelector(selectorBasketItems);
 
-  const totalPrice = basketItems.reduce((acc, item) => acc + item.price, 0);
+  const totalPrice = basketItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
 
   const addToOrderHistory = async (order) => {
     try {

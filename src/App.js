@@ -5,6 +5,7 @@ const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
 const RegistrationPage = lazy(() => import("./pages/RegistrationPage/RegistrationPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage"));
 const CatalogPage = lazy(() => import("./pages/CatalogPage/CatalogPage"));
+const List = lazy(() => import("./components/List/List"));
 const NotFound = lazy(() => import("./pages/NotFound/NotFoundPage"));
 const ProfilePage = lazy(() => import("./pages/ProfilePage/ProfilePage"));
 const HistoryOrders = lazy(() => import("./components/HistoryOrders/HistoryOrders"));
@@ -15,7 +16,9 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />}>
-        <Route index element={<CatalogPage />} />
+        <Route path="/" element={<CatalogPage />}>
+          <Route path=":category" element={<List />}></Route>
+        </Route>
         <Route path="profile" element={<ProfilePage />} >
           <Route path="user" element={ <Profile/>} />
           <Route path="orders" element={<HistoryOrders />} />

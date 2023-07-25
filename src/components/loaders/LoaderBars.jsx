@@ -1,6 +1,6 @@
 import { Bars } from "react-loader-spinner";
 
-export function BarsLoader() {
+export default function BarsLoader() {
   return (
     <Bars
       height="80"
@@ -8,11 +8,10 @@ export function BarsLoader() {
       color="#1976d2"
       ariaLabel="bars-loading"
       wrapperStyle={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        position: "absolute",
+        top: "calc(50% - 80px)",
+        left: "calc(50% - 40px)",
       }}
-      wrapperClass=""
       visible={true}
     />
   );
