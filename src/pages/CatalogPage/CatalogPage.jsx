@@ -24,16 +24,17 @@ function CatalogPage() {
   const [emptyRespons, setEmptyRespons] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { category } = useParams();
-  const [querySearch] = useSearchParams();
-
-  const navigate = useNavigate();
-
-  const queryValue = querySearch.get("query") ?? "";
-
   const dispatch = useDispatch();
 
   const basketItems = useSelector(selectorBasketItems);
+
+  const { category } = useParams();
+
+  const [querySearch] = useSearchParams();
+
+  const queryValue = querySearch.get("query") ?? "";
+
+  const navigate = useNavigate();
 
   const checkProductInItems = basketItems.map((item) => item._id);
 
@@ -43,8 +44,6 @@ function CatalogPage() {
   useEffect(() => {
     (async () => {
       try {
-        // Get data from server
-
         if (category && queryValue) {
           navigate("/");
         }

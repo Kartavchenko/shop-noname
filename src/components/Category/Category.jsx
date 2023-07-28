@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getDataThunk } from "../../redux/dataOperations";
+import { getAllCategories } from "../../redux/dataOperations";
 import { NavLink } from "react-router-dom";
 import { SortBtn } from "./Category.styled";
 
@@ -9,22 +9,18 @@ function Category({ setFilterBtn }) {
   useEffect(() => {
     (async () => {
       try {
-        const { getAllProducts } = await getDataThunk();
+        const categories = await getAllCategories();
 
-        setCategoryList(getAllProducts);
+        setCategoryList(categories);
       } catch (error) {
         console.log(error);
       }
     })();
   }, []);
 
-  const filteredList = categoryList
-    .map(({ category }) => category)
-    .filter((item, index, array) => array.indexOf(item) === index);
-
   return (
     <>
-      {filteredList.map((category) => (
+      {categoryList.map((category) => (
         <NavLink key={category} to={category}>
           <SortBtn type="button" onClick={() => setFilterBtn(false)}>
             {category}

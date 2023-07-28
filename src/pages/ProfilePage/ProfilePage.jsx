@@ -31,9 +31,11 @@ function ProfilePage() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigation("/");
-    } else if (querySearch) {
-      navigation(`/?query=${querySearch}`);
+      return navigation("/");
+    }
+
+    if (querySearch) {
+      return navigation(`/?query=${querySearch}`);
     }
   }, [isLoggedIn, navigation, querySearch]);
 

@@ -5,7 +5,21 @@ import axios from "axios";
   headers: {
     "Content-Type": "application/json",
   },
-});
+ });
+
+export const getAllCategories = async () => {
+  try {
+    const { data } = await instance.get(`/products`);
+    
+    const filteredList = data.getAllProducts
+    .map(({ category }) => category)
+      .filter((item, index, array) => array.indexOf(item) === index);
+    
+    return filteredList;
+  } catch (error) {
+    return error.message;
+  }
+}
 
 export const getDataThunk = async (page, pageLimit, query, category) => { 
   const ifQueryNull = !query ? "" : `&query=${query}`;
@@ -13,7 +27,7 @@ export const getDataThunk = async (page, pageLimit, query, category) => {
   
   try {
     const { data } = await instance.get(`/products${ifCategoryUndef}?page=${page}&pageLimit=${pageLimit}${ifQueryNull}`);
-    console.log(data)
+
     return data;
   } catch (error) {
     return error.message;
