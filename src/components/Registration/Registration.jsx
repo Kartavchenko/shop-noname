@@ -17,8 +17,8 @@ function Registration() {
 
   const dispatch = useDispatch();
 
-  const onSubmit = (value) => {
-    dispatch(registerAccount(value.email, value.password));
+  const onSubmit = ({ email, password }) => {
+    dispatch(registerAccount(email, password));
   };
 
   return (
