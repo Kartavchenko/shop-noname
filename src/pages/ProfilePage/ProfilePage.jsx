@@ -1,26 +1,29 @@
 import { useState, useEffect, Suspense } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { onSnapshot } from "firebase/firestore";
-import { collectionGroup } from "firebase/firestore";
+import { Outlet, useNavigate, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectorIsLoggedInUser,
   selectorUserData,
 } from "../../redux/selectors";
-import { fireDB } from "../../firebase/config";
 import { Container } from "./ProfilePage.styled";
 import ListNavProfile from "../../components/ListNavProfile/ListNavProfile";
 import { getDataUser } from "../../redux/authOperations";
+import { getHisrotyOrdersUser } from "../../redux/dataOperations";
 
-const ProfilePage = () => {
+function ProfilePage() {
   const [historyOrders, setHistoryOrders] = useState([]);
 
-  const isLoggedIn = useSelector(selectorIsLoggedInUser);
-  const { name, email, uid } = useSelector(selectorUserData);
+  const [searchParams] = useSearchParams();
 
   const navigation = useNavigate();
 
+  const isLoggedIn = useSelector(selectorIsLoggedInUser);
+
+  const { name, email, uid } = useSelector(selectorUserData);
+
   const dispatch = useDispatch();
+
+  const querySearch = searchParams.get("query") ?? "";
 
   useEffect(() => {
     (async () => await dispatch(getDataUser()))();
@@ -28,31 +31,29 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigation("/");
+      return navigation("/");
     }
-  }, [navigation, isLoggedIn]);
+
+    if (querySearch) {
+      return navigation(`/?query=${querySearch}`);
+    }
+  }, [isLoggedIn, navigation, querySearch]);
 
   useEffect(() => {
     if (!uid) return;
 
     (async () => {
       try {
-        await onSnapshot(
-          collectionGroup(fireDB, `${email}`), // Get history list collection from firebase
-          (snapshot) => {
-            const order = snapshot.docChanges().map((change) => ({
-              id: change.doc.id,
-              ...change.doc.data(),
-            }));
+        const result = await getHisrotyOrdersUser(uid);
 
-            return setHistoryOrders(order);
-          }
-        );
+        if (!result) return;
+
+        setHistoryOrders(result);
       } catch (error) {
-        console.error("Error getting users:", error);
+        console.log(error);
       }
     })();
-  }, [uid, email]);
+  }, [uid]);
 
   return (
     <Container>
@@ -62,6 +63,6 @@ const ProfilePage = () => {
       </Suspense>
     </Container>
   );
-};
+}
 
 export default ProfilePage;

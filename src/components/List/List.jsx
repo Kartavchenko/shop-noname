@@ -1,70 +1,46 @@
-import { useState } from "react";
 import plug from "../../image/no-image-icon.png";
+import ModalProduct from "../Modal/ModalProducts";
 import {
   ButtonBasket,
   IconAddToBasket,
   ItemsList,
   ItemCard,
   ImageCard,
+  TextCard,
   Card,
-  IconAdded,
-  TextDescription,
-  ButtonShowDescription,
 } from "./List.styled";
 
-const List = ({ elements, addToBasket, checkItemsInItems }) => {
-  const { id, category, images, title, price, description } = elements;
-
-  const [showDescription, setShowDescription] = useState(false);
-
-  const handleToggleDescription = () => {
-    setShowDescription(!showDescription);
-  };
+function List({ items, addToBasket, checkProductInItems }) {
+  const { _id, category, image_url, price, description } = items;
 
   return (
     <Card component="li">
       <ItemsList component="ul">
         <ItemCard component="li">
-          <ImageCard
-            showDescription={showDescription}
-            src={images ?? plug}
-            alt="equipment"
+          <ImageCard src={image_url ?? plug} alt="equipment" />
+        </ItemCard>
+        <ItemCard component="li">
+          <ModalProduct /* <--- Modal window of product <---*/
+            items={items}
+            addToBasket={addToBasket}
+            checkProductInItems={checkProductInItems}
           />
         </ItemCard>
         <ItemCard component="li">
-          <p>{title}</p>
+          <TextCard>Category: {category}</TextCard>
         </ItemCard>
         <ItemCard component="li">
-          <p>Category: {category.name}</p>
-        </ItemCard>
-        <ItemCard component="li">
-          <p>{description.slice(0, 35)}</p>
-          <TextDescription className={`${showDescription ? "show" : "hide"}`}>
-            {description}
-          </TextDescription>
-        </ItemCard>
-        <ItemCard component="li">
-          <ButtonShowDescription
-            size="small"
-            type="button"
-            onClick={handleToggleDescription}
-          >
-            {showDescription ? "hide description..." : "show description..."}
-          </ButtonShowDescription>
+          <TextCard>{description.slice(0, 35)}</TextCard>
         </ItemCard>
         <ItemCard component="li">
           <p>${price}</p>
-          <ButtonBasket type="button" onClick={() => addToBasket(id)}>
-            {checkItemsInItems.includes(id) ? (
-              <IconAdded />
-            ) : (
-              <IconAddToBasket />
-            )}
+          <ButtonBasket type="button" onClick={() => addToBasket(_id)}>
+            <IconAddToBasket />
           </ButtonBasket>
         </ItemCard>
       </ItemsList>
     </Card>
   );
-};
+}
 
 export default List;

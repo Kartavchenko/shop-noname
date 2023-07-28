@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Basket from "../Basket/Basket";
 import SearchBar from "../Search/Search";
 import {
@@ -17,11 +18,18 @@ import {
   UserIcon,
   LogoTitleMob,
   LogoTitleSubMob,
+  BoxFilterBtns,
+  GridFilterBtn,
+  GridFilterIconOpen,
+  GridFilterIconClose,
 } from "./Header.styled";
 import { useSelector } from "react-redux";
 import { selectorIsLoggedInUser } from "../../redux/selectors";
+import Category from "../../components/Category/Category";
 
-const Header = () => {
+function Header() {
+  const [filterBtn, setFilterBtn] = useState(false);
+
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
 
   return (
@@ -33,6 +41,12 @@ const Header = () => {
         <LogoTitleSub variant="h4">Store</LogoTitleSub>
       </Logo>
       <NavBar component="nav">
+        <GridFilterBtn type="button" onClick={() => setFilterBtn(!filterBtn)}>
+          {filterBtn ? <GridFilterIconOpen /> : <GridFilterIconClose />}
+        </GridFilterBtn>
+        <BoxFilterBtns>
+          {filterBtn && <Category setFilterBtn={setFilterBtn} />}
+        </BoxFilterBtns>
         <SearchBar />
         {isLoggedIn ? (
           <BoxUser>
@@ -56,6 +70,6 @@ const Header = () => {
       </NavBar>
     </HeaderBox>
   );
-};
+}
 
 export default Header;

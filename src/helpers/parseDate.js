@@ -1,5 +1,6 @@
 export const parseDate = (date) => {
-  const parsedDate = new Date(Number(date));
+  const timestamp = Date.parse(date);
+  const parsedDate = new Date(timestamp);
   const day = parsedDate.getDate();
   const month = parsedDate.getMonth() + 1;
   const year = parsedDate.getFullYear();

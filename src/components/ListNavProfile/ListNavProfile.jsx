@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { BoxNav, NavUser, Container } from "./ListNavProfile.styled";
 import { getDataUser } from "../../redux/authOperations";
 
-const ListNavProfile = ({ userData }) => {
+function ListNavProfile({ userData }) {
   const { name, email } = userData;
 
   const dispatch = useDispatch();
@@ -27,6 +27,6 @@ const ListNavProfile = ({ userData }) => {
       </BoxNav>
     </Container>
   );
-};
+}
 
 export default ListNavProfile;

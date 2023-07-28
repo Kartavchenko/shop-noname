@@ -17,7 +17,7 @@ import {
   Text,
 } from "./HistoryOrder.styled";
 
-const HistoryOrders = () => {
+function HistoryOrders() {
   const [orderListHistory, setOrderListHistory] = useState([]);
   const [loadMore, setLoadMore] = useState(10);
 
@@ -27,18 +27,19 @@ const HistoryOrders = () => {
     setOrderListHistory(historyOrders.slice(0, loadMore));
   }, [historyOrders, loadMore]);
 
-  const totalOrdersHad = historyOrders.length;
+  const totalOrdersHave = historyOrders.length;
   const totalOrdersShow = orderListHistory.length;
 
   // order products list
-  const orderDetails = (list) =>
-    list.map(({ title, price, description }) => {
+  const eachItemInOrder = (list) =>
+    list.map(({ name, price, description, quantity }) => {
       return (
-        <ItemProduct component="li" key={title}>
+        <ItemProduct component="li" key={name}>
           <ProductList component="ul">
             <ProductItem component="li">
+              <TitlesOrder>X{quantity}</TitlesOrder>
               <TitlesOrder>Product:</TitlesOrder>
-              <Text>{title}</Text>
+              <Text>{name}</Text>
             </ProductItem>
             <ProductItem component="li">
               <TitlesOrder>Price:</TitlesOrder>
@@ -54,30 +55,36 @@ const HistoryOrders = () => {
     });
 
   // order user
-  const orderItems = orderListHistory.map(({ id, order, totalAmount }) => (
-    <OrderItem component="li" key={id}>
-      <BoxOrderTitle component="ul">
-        <li>
-          {/* Title order with date + time + sum */}
-          <Text>{parseDate(id)};</Text>
-        </li>
-        <li>
-          <Text>Total: ${totalAmount}</Text>
-        </li>
-      </BoxOrderTitle>
-      <OrderListProducts component="ul">
-        {orderDetails(order)}
-      </OrderListProducts>
-    </OrderItem>
-  ));
+  const orderList = orderListHistory.map(
+    ({ _id, items, totalPrice, orderDate }) => (
+      <OrderItem component="li" key={_id}>
+        <BoxOrderTitle component="ul">
+          <li>
+            {/* Title order with date + time + sum */}
+            <Text>{parseDate(orderDate)};</Text>
+          </li>
+          <li>
+            <Text>Total: ${totalPrice}</Text>
+          </li>
+        </BoxOrderTitle>
+        <OrderListProducts component="ul">
+          {eachItemInOrder(items)}
+        </OrderListProducts>
+      </OrderItem>
+    )
+  );
 
   return (
     <BoxOrders>
-      <OrderList component="ul">{orderItems}</OrderList>
+      {totalOrdersHave ? (
+        <OrderList component="ul">{orderList}</OrderList>
+      ) : (
+        <h2>No history exist</h2>
+      )}
       {totalOrdersShow ? (
         <BoxBtnLoadMore>
           <ButtonLoadMore
-            disabled={totalOrdersShow >= totalOrdersHad}
+            disabled={totalOrdersShow >= totalOrdersHave}
             variant="contained"
             color="secondary"
             onClick={() =>
@@ -93,6 +100,6 @@ const HistoryOrders = () => {
       ) : null}
     </BoxOrders>
   );
-};
+}
 
 export default HistoryOrders;

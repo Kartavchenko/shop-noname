@@ -10,5 +10,8 @@ export const ItemContainer = styled(Box)`
 `;
 
 export const Item = styled(Box)`
-  width: 400px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 200px;
 `;

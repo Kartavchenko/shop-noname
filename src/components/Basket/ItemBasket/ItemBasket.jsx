@@ -1,20 +1,20 @@
 import { ButtonBasket, IconRemoveFromBasket } from "../Basket.styled";
 import { ItemContainer, Item } from "./ItemBasket.styled";
 
-export const ItemBasket = ({ basketItems, removeFromBasket }) => {
+export function ItemBasket({ basketItems, removeFromBasket }) {
   return basketItems.map(
-    ({ id, images, category, brand, price, description }) => (
-      <ItemContainer key={id}>
+    ({ _id, image_url, category, name, price, quantity }) => (
+      <ItemContainer key={_id}>
         <Item>
           <li>
-            <img src={images} alt="equipment" width="200" height="200" />
+            <img src={image_url} alt="equipment" width="200" height="200" />
           </li>
-          <li>{category.name}</li>
-          <li>{brand}</li>
+          <li>{name}</li>
+          <li>{category}</li>
           <li>{price}</li>
-          <li>{description}</li>
+          <li>x{quantity}</li>
           <li>
-            <ButtonBasket type="button" onClick={() => removeFromBasket(id)}>
+            <ButtonBasket type="button" onClick={() => removeFromBasket(_id)}>
               <IconRemoveFromBasket />
             </ButtonBasket>
           </li>
@@ -22,4 +22,4 @@ export const ItemBasket = ({ basketItems, removeFromBasket }) => {
       </ItemContainer>
     )
   );
-};
+}

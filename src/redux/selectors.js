@@ -1,10 +1,10 @@
-export const selectorUserData = ({ data }) => data.user;
+export const selectorUserData = ({ user }) => user.user;
 
-export const selectorIsLoggedInUser = ({ data }) => data.user.uid;
+export const selectorIsLoggedInUser = ({ user }) => user.user.uid;
 
-export const selectorLoading = ({ data }) => data.loading;
+export const selectorLoading = ({ user }) => user.loading;
 
-export const selectorError = ({ data }) => data.error;
+export const selectorError = ({ user }) => user.error;
 
-export const selectorBasketItems = ({ data }) => data.basket;
+export const selectorBasketItems = ({ user }) => user.basket;
 

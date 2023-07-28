@@ -6,6 +6,12 @@ export const Main = styled.main`
   background: #433E49;
 `;
 
+export const BoxLoading = styled.div`
+  position: relative;
+  width: 90vw;
+  height: 90vh;
+`;
+
 export const BoxList = styled(Box)`
   display: flex;
   flex-wrap: wrap;

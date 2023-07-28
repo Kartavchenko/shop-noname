@@ -1,36 +1,59 @@
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { InputAdornment } from "@mui/material";
+import { InputAdornment, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { SearchField } from "./Search.styled";
 
-const SearchBar = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const title = searchParams.get("title") ?? "";
+function SearchBar() {
+  const [searchParams, setSearchParams] = useSearchParams({});
+
+  const queryValue = searchParams.get("query") ?? "";
+
+  const [searchValue, setSearchValue] = useState(queryValue);
 
   const handleQuery = (e) => {
-    const searchQuery = e.target.value;
+    setSearchValue(e.target.value);
 
-    if (searchQuery === "") {
+    if (e.target.value === "") {
       return setSearchParams({});
     }
-    setSearchParams({ title: searchQuery });
+  };
+
+  const handleSubmitQuery = (e) => {
+    e.preventDefault();
+
+    if (searchValue === "") {
+      return setSearchParams({});
+    }
+
+    setSearchParams({ query: searchValue });
   };
 
   return (
-    <SearchField
-      size="small"
-      placeholder="I'm Looking..."
-      value={title}
-      onChange={handleQuery}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        ),
-      }}
-    />
+    <form action="">
+      <SearchField
+        size="small"
+        placeholder="I'm Looking..."
+        value={searchValue}
+        onChange={handleQuery}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <Button
+                type="submit"
+                size="small"
+                variant="subtitle"
+                onClick={handleSubmitQuery}
+              >
+                <SearchIcon />
+                Serach
+              </Button>
+            </InputAdornment>
+          ),
+        }}
+      />
+    </form>
   );
-};
+}
 
 export default SearchBar;

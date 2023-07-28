@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { loginWithGoogle } from "../../redux/authOperations";
 import { LoginBtnGoogle, LoginIconGoogle } from "./LoginWithGoogle.styled";
 
-const LoginWithGoogle = ({ page }) => {
+function LoginWithGoogle({ page }) {
   const dispatch = useDispatch();
 
   const handleLoginWithGoogle = () => {
@@ -20,6 +20,6 @@ const LoginWithGoogle = ({ page }) => {
       {page} with Google
     </LoginBtnGoogle>
   );
-};
+}
 
 export default LoginWithGoogle;

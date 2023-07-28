@@ -5,7 +5,7 @@ import { registerAccount } from "../../redux/authOperations";
 import { Input, BtnRegister, Form } from "./Registration.styled";
 import { schema } from "../../schemas/AuthSchema";
 
-const Registration = () => {
+function Registration() {
   const {
     register,
     handleSubmit,
@@ -52,6 +52,6 @@ const Registration = () => {
       </Form>
     </div>
   );
-};
+}
 
 export default Registration;

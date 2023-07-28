@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { logOutAccount, loginWithGoogle } from "./authOperations";
 
 const userSlice = createSlice({
-  name: "data",
+  name: "user",
   initialState: {
     user: {uid: null, email: null, name: null},
     basket: [],
@@ -21,7 +21,7 @@ const userSlice = createSlice({
       state.loading = payload;
     },
     removeItemFromBasket: (state, { payload }) => {
-      state.basket = state.basket.filter(item => item.id !== payload);
+      state.basket = state.basket.filter(item => item._id !== payload);
     },
     cleenBasket: (state) => {
       state.basket = [];

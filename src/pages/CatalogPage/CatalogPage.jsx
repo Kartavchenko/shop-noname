@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToBasket } from "../../redux/userSlice";
 import {
@@ -8,114 +8,130 @@ import {
   BoxPagination,
   PaginationStyled,
   TextFail,
+  BoxLoading,
 } from "./CatalogPage.styled";
-import { getDataThunk, getTotalPages } from "../../redux/dataOperations";
-import {
-  selectorIsLoggedInUser,
-  selectorBasketItems,
-} from "../../redux/selectors";
+import BarsLoader from "../../components/loaders/LoaderBars";
+import { getDataThunk } from "../../redux/dataOperations";
+import { selectorBasketItems } from "../../redux/selectors";
 import Notiflix from "../../helpers/notifications";
 import List from "../../components/List/List";
 
-const CatalogPage = () => {
-  const [page, setPage] = useState(0);
-  const [getValueTotalPages, setValueGetTotalPages] = useState(0);
+function CatalogPage() {
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageLimit] = useState(12);
+  const [getTotalPages, setGetTotalPages] = useState(1);
   const [items, setItems] = useState([]);
   const [emptyRespons, setEmptyRespons] = useState(false);
-
-  const [querySearch] = useSearchParams();
-  const queryValue = querySearch.get("title");
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
-  const isLoggedIn = useSelector(selectorIsLoggedInUser);
   const basketItems = useSelector(selectorBasketItems);
 
-  const checkItemsInItems = basketItems.map((item) => item.id);
+  const { category } = useParams();
 
-  useEffect(() => {
-    (async () => {
-      try {
-        // Get data from server
-        const data = await getDataThunk(page, queryValue);
+  const [querySearch] = useSearchParams();
 
-        if (!data.length) {
-          setEmptyRespons(true);
-        } else {
-          setEmptyRespons(false);
-        }
+  const queryValue = querySearch.get("query") ?? "";
 
-        setItems(data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [page, queryValue]);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const totalPages = await getTotalPages();
-
-        // Set total pages
-        await setValueGetTotalPages(totalPages);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+  const checkProductInItems = basketItems.map((item) => item._id);
 
   // Find item by id
-  const findItemID = (array, id) => array.find((item) => item.id === id);
+  const findItemID = (array, id) => array.find((item) => item._id === id);
 
-  const addToBasket = (id) => {
-    if (isLoggedIn) {
-      const itemID = findItemID(items, id);
+  useEffect(() => {
+    (async () => {
+      try {
+        if (category && queryValue) {
+          navigate("/");
+        }
 
-      // Check if item is already in basket
-      if (findItemID(basketItems, id)) {
-        return Notiflix.Notify.info("Already added");
+        if (queryValue) {
+          setPageNumber(1);
+        }
+
+        setLoading(true);
+
+        const { getProducts, totalPages, getByCategory } = await getDataThunk(
+          pageNumber,
+          pageLimit,
+          queryValue,
+          category
+        );
+
+        setLoading(false);
+
+        if (!getProducts.length) {
+          return setEmptyRespons(true);
+        }
+
+        setEmptyRespons(false);
+
+        if (getByCategory.length) {
+          setGetTotalPages(Math.floor(getByCategory.length / pageLimit) || 1);
+        } else {
+          setGetTotalPages(totalPages);
+        }
+
+        if (getByCategory.length) {
+          return setItems(getByCategory);
+        }
+
+        setItems(getProducts);
+      } catch (error) {
+        setLoading(false);
+
+        console.log(error);
       }
+    })();
+  }, [pageNumber, pageLimit, queryValue, category, navigate]);
 
-      dispatch(addItemToBasket(itemID));
+  const addToBasket = (id, quantity = 1) => {
+    const itemID = findItemID(items, id);
 
-      Notiflix.Notify.success(`Added ${itemID.title}`);
-    } else {
-      // If user is not logged in
-      Notiflix.Notify.failure("Please login in or register account");
+    if (findItemID(basketItems, id)) {
+      return Notiflix.Notify.failure(`${itemID.name} exist in cart`);
     }
+
+    Notiflix.Notify.success(`Added ${itemID.name}`);
+
+    return dispatch(addItemToBasket({ ...itemID, quantity: quantity }));
   };
 
-  const paginationPages = (evt, page) => {
-    const itemsPerPage = 20;
-    const current = (page - 1) * itemsPerPage;
-    setPage(current);
+  const paginationPages = (page) => {
+    setPageNumber(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <Main>
+      {loading && (
+        <BoxLoading>
+          <BarsLoader />
+        </BoxLoading>
+      )}
       {emptyRespons ? (
         <TextFail>Sorry, found nothing</TextFail>
       ) : (
         <BoxList component="ul">
-          {items.map((elements) => (
+          {items.map((items) => (
             <List
-              key={elements.id}
-              elements={elements}
-              findItemID={findItemID}
+              key={items._id}
               items={items}
-              checkItemsInItems={checkItemsInItems}
+              findItemID={findItemID}
+              checkProductInItems={checkProductInItems}
               addToBasket={addToBasket}
             />
           ))}
         </BoxList>
       )}
-      {items.length ? (
+      {items.length && !emptyRespons ? (
         <BoxPagination>
           <PaginationStyled
-            onChange={(evt, page) => paginationPages(evt, page)}
-            count={getValueTotalPages}
+            onChange={(evt, page) => paginationPages(page)}
+            count={getTotalPages}
             variant="outlined"
             color="primary"
             shape="rounded"
@@ -124,6 +140,6 @@ const CatalogPage = () => {
       ) : null}
     </Main>
   );
-};
+}
 
 export default CatalogPage;

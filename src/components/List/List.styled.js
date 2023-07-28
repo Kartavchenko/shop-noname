@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Box } from "@mui/material";
+import { Button, Box, Typography } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import AddTaskIcon from "@mui/icons-material/AddTask";
 
@@ -26,7 +26,6 @@ export const ItemsList = styled(Box)`
 export const ItemCard = styled(Box)`
   display: flex;
   justify-content: center;
-  margin-bottom: 5px;
   color: #CBD0D8;
 `;
 
@@ -34,19 +33,20 @@ export const ImageCard = styled.img`
   width: 300px;
   height: 250px;
   border-radius: 10px;
+  margin-bottom: 5px;
   animation: show;
   filter: ${props => props.showDescription && "blur(5px)"};
+`;
+
+export const TextCard = styled(Typography)`
+  padding-right: 10px;
+  padding-left: 10px;
 `;
 
 export const ImagePlug = styled.div`
   width: 300px;
   height: 250px;
   background-color: #e1e1e1;
-`;
-
-export const ButtonShowDescription = styled(Button)`
-  text-transform: none;
-  color: #D3AC2B;
 `;
 
 export const TextDescription = styled.p`

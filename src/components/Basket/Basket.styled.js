@@ -20,12 +20,12 @@ export const IconSadSmile = styled(SentimentVeryDissatisfiedIcon)`
 export const ModalOrder = styled(DialogActions)`
   justify-content: center;
   background-color: #4C4556;
-  `;
+`;
 
 export const ModalBack = styled(DialogActions)`
   justify-content: flex-start;
   background-color: #4C4556;
-  `;
+`;
 
 export const ModalTitle = styled(DialogTitle)`
   text-align: center;
@@ -34,15 +34,25 @@ export const ModalTitle = styled(DialogTitle)`
 `;
 
 export const ModalContainer = styled(DialogContent)`
+  display: flex;
+  flex-direction: column;
   background-color: #4C4556;
-	min-width: 500px;
-	min-height: 400px;
   color: #CBD0D8;
+  
+  @media screen and (min-width: 768px) {
+    min-height: 400px;
+    min-width: 400px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    min-height: 400px;
+    min-width: 500px;
+  }
 `;
 
 export const IconRemoveFromBasket = styled(RemoveShoppingCartIcon)`
   fill: #D3AC2B;
-  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: cubic-bezier(0.4, 0, 0.2, 1) 250ms;
 
   &:hover, :focus {
     scale: 1.1;

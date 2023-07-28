@@ -5,7 +5,7 @@ import { Input, BtnLogin, Form, BoxForm } from "./Login.styled";
 import { loginAccount } from "../../redux/authOperations";
 import { schema } from "../../schemas/AuthSchema";
 
-const Login = () => {
+function Login() {
   const {
     register,
     handleSubmit,
@@ -50,6 +50,6 @@ const Login = () => {
       </Form>
     </BoxForm>
   );
-};
+}
 
 export default Login;
