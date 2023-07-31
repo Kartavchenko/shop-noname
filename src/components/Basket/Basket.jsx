@@ -3,7 +3,11 @@ import { Slide } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Notiflix from "../../helpers/notifications";
 import { removeItemFromBasket, cleenBasket } from "../../redux/userSlice";
-import { selectorBasketItems, selectorUserData } from "../../redux/selectors";
+import {
+  selectorBasketItems,
+  selectorUserData,
+  selectorIsLoggedInUser,
+} from "../../redux/selectors";
 import { ItemBasket } from "./ItemBasket/ItemBasket";
 import { addToHistoryOrders } from "../../redux/dataOperations";
 import {
@@ -33,6 +37,8 @@ function Basket() {
   const dispatch = useDispatch();
 
   const basketItems = useSelector(selectorBasketItems);
+
+  const isLoggedIn = useSelector(selectorIsLoggedInUser);
 
   const totalPrice = basketItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -68,6 +74,14 @@ function Basket() {
         "Please add product to basket.",
         "Okay"
       );
+
+    if (!isLoggedIn) {
+      return Notiflix.Report.failure(
+        "Not registred",
+        "Please register or login in.",
+        "Okay"
+      );
+    }
     await addToOrderHistory({
       items: destructuringBasketItems,
       totalPrice: totalPrice,

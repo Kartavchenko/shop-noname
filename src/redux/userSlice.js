@@ -56,7 +56,6 @@ const userSlice = createSlice({
       })
       .addCase(logOutAccount.fulfilled, (state) => {
         state.user = {uid: null, email: null, name: null};
-        state.basket = [];
         state.error = null;
       })
   }

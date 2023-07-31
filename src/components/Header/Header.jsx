@@ -55,7 +55,6 @@ function Header() {
                 <UserIcon />
               </UserBtnProfile>
             </User>
-            <Basket />
           </BoxUser>
         ) : (
           <BoxAuthBtn>
@@ -67,6 +66,7 @@ function Header() {
             </LinkToRegister>
           </BoxAuthBtn>
         )}
+        <Basket />
       </NavBar>
     </HeaderBox>
   );

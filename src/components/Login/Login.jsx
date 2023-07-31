@@ -17,8 +17,8 @@ function Login() {
 
   const dispatch = useDispatch();
 
-  const onSubmit = (value) => {
-    dispatch(loginAccount(value.email, value.password));
+  const onSubmit = ({ email, password }) => {
+    dispatch(loginAccount(email, password));
   };
 
   return (

@@ -42,12 +42,14 @@ function CatalogPage() {
   const findItemID = (array, id) => array.find((item) => item._id === id);
 
   useEffect(() => {
+    if (queryValue) {
+      return navigate(`/?query=${queryValue}`);
+    }
+  }, [navigate, queryValue]);
+
+  useEffect(() => {
     (async () => {
       try {
-        if (category && queryValue) {
-          navigate("/");
-        }
-
         if (queryValue) {
           setPageNumber(1);
         }

@@ -15,7 +15,7 @@ function ProfilePage() {
 
   const [searchParams] = useSearchParams();
 
-  const navigation = useNavigate();
+  const navigate = useNavigate();
 
   const isLoggedIn = useSelector(selectorIsLoggedInUser);
 
@@ -31,13 +31,13 @@ function ProfilePage() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      return navigation("/");
+      return navigate("/");
     }
 
     if (querySearch) {
-      return navigation(`/?query=${querySearch}`);
+      return navigate(`/?query=${querySearch}`);
     }
-  }, [isLoggedIn, navigation, querySearch]);
+  }, [isLoggedIn, navigate, querySearch]);
 
   useEffect(() => {
     if (!uid) return;
