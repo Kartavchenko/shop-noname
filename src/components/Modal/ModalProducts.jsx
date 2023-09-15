@@ -16,7 +16,10 @@ import {
   MultipleItemButton,
   ReduceItemButton,
 } from "./ModalProducts.styled";
-import { getOneProduct } from "../../redux/dataOperations";
+import { getOneProduct, addToWishlist } from "../../redux/dataOperations";
+import Notiflix from "../../helpers/notifications";
+import { useSelector } from "react-redux";
+import { selectorUserData } from "../../redux/selectors";
 
 function ModalProduct({ items, addToBasket, checkProductInItems }) {
   const { _id, image_url, name, price, description } = items;
@@ -26,6 +29,18 @@ function ModalProduct({ items, addToBasket, checkProductInItems }) {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => setOpen(false);
+
+  const { uid } = useSelector(selectorUserData);
+
+  const handleWishlistItem = async (id) => {
+    // const fetchWishlist = await getWishlist(uid);
+    // const checkIfItemExistInWishlist = fetchWishlist.find(
+    //   (item) => item._id === id
+    // );
+    await addToWishlist(uid, items);
+    Notiflix.Notify.success("Added to wishlist");
+  };
+
   const handleOpen = () => {
     setOpen(true);
     getOneItem(_id);
@@ -100,8 +115,12 @@ function ModalProduct({ items, addToBasket, checkProductInItems }) {
                 </BoxPrice>
                 <BoxWishlist>
                   <Typography>Add to wishlist</Typography>
-                  <AddedToFavoriteIcon />
-                  <FavoriteBorderIcon />
+                  <button type="button" onClick={() => handleWishlistItem(_id)}>
+                    <AddedToFavoriteIcon />
+                  </button>
+                  <button type="button" onClick={() => handleWishlistItem(_id)}>
+                    <FavoriteBorderIcon />
+                  </button>
                 </BoxWishlist>
               </BoxTitles>
             </ModalBoxTitle>

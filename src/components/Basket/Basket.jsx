@@ -30,7 +30,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function Basket() {
-  const [open, setOpen] = useState(false); // Modal state
+  const [open, setOpen] = useState(false);
 
   const { uid } = useSelector(selectorUserData);
 

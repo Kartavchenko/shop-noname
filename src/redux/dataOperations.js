@@ -66,3 +66,32 @@ export const addToHistoryOrders = async (uid, order) => {
   }
 }
 
+export const getWishlist = async (uid) => {
+  try {
+    const { data } = await instance.get(`/wishlist/${uid}`);
+
+    return data.items;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export const addToWishlist = async (uid, item) => {
+  try {
+    const { data } = await instance.post("/wishlist", {userId: uid, items: [item]});
+
+    return data;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export const removeFromWishlist = async (uid, itemId) => {
+  try {
+    const { data } = await instance.delete(`/wishlist/${uid}/${itemId}`);
+
+    return data;
+  } catch (error) {
+    return error.message;
+  }
+}

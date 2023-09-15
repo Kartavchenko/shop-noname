@@ -59,7 +59,7 @@ function ProfilePage() {
     <Container>
       <ListNavProfile userData={{ name, email }} />
       <Suspense>
-        <Outlet context={[historyOrders]} />
+        <Outlet context={[historyOrders, uid]} />
       </Suspense>
     </Container>
   );

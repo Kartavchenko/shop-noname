@@ -32,7 +32,6 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // ---loginWithGoogle---
       .addCase(loginWithGoogle.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -49,7 +48,6 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = payload;
       })
-      // ---logOutAccount---
       .addCase(logOutAccount.pending, (state) => {
         state.loading = true;
         state.error = null;
